@@ -1,10 +1,11 @@
 /* Bordered form */
-form {
-    border: 2px solid #800000;
-  }
-  
+
+form {}
+
 /* Full-width inputs */
-input[type=text], input[type=password] {
+
+input[type=text],
+input[type=password] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -12,42 +13,53 @@ input[type=text], input[type=password] {
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
-  
+
 /* Set a style for all buttons */
+
 button {
-  background-color: 	#800080;
+  height: 40px;
+  width: 80px;
+  background-color: #3B1869;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
+  border-radius: 40px;
   border: none;
   cursor: pointer;
   width: 100%;
+  font-family: 'Montserrat', sans-serif;;
 }
 
 /*Style for Geaux Park header */
+
 .geauxPark {
-  text-align: left;
-  color: gold;
-  background-color: #800080;
+  text-align: center;
+  color: #FCCF22;
+  background-color: #3B1869;
   padding: 10px;
+  font-family: 'Montserrat', sans-serif;
 }
-  
+
 /* Add a hover effect for buttons */
+
 button:hover {
   opacity: 0.8;
 }
-  
+
 .h2 {
-  padding: 20px 10px;
+  padding: 10px 8px;
   text-align: center;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* Add padding to containers */
+
 .container {
   padding: 10px;
 }
-  
+
 /* Change styles for span and cancel button on extra small screens */
+
 @media screen and (max-width: 300px) {
   span.psw {
     display: block;

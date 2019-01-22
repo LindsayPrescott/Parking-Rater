@@ -1,24 +1,33 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Geaux Park</title>
-    </head>
-    <body>
-        <link rel="stylesheet" href="style.css">
-        <h1 class="geauxPark">Geaux Park</h1>
-        <form action="">
-            <h2 class="h2">Sign Up</h2>
-            <div class="container">
-                <label for="inputEmailAddress"><b>Email:</b></label>
-                <input id="inputEmailAddress" placeholder="Type email address" type="text"/>
-                <label for="inputPassword"><b>Password:</b></label>
-                <input id="inputPassword" placeholder="Type a password" type="text"/>
-                <label for="passwordRepeat"><b>Password:</b></label>
-                <input id="passwordRepeat" placeholder="Repeat your password" type="text"/>
-                <button id="accountSubmission">Submit</button>
-                <a id="cancelLink" href="login.html">Cancel</a>
-            </div>
-        </form>
-    </body>
+
+  <head>
+    <meta charset="utf-8">
+    <title>Geaux Park</title>
+  </head>
+
+  <body>
+    <link rel="stylesheet" href="style.css">
+    <h1 class="geauxPark">Geaux Park</h1>
+    <form action="">
+      <h2 class="h2">Sign Up</h2>
+      <div class="container">
+        <div class="signup-container">
+          <div class="signup-email">
+            <input id="input-email" placeholder="Email" type="text" />
+          </div>
+          <div class="signup-password">
+            <input id="input-passwrod" placeholder="Password" type="text" />
+            <input id="password-repeat" placeholder="Confirm Password" type="text" />
+          </div>
+          <button class="button button--primary button--small button--solid" id="account-submission">Submit</button>
+        </div>
+        <div class="divider">
+          <hr>
+        </div>
+        <button class="button button--primary button--small button--solid" id="cancel-link" href="login.html">Cancel</button>
+      </div>
+    </form>
+  </body>
+
 </html>

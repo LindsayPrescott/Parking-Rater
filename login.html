@@ -9,18 +9,27 @@
         <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase-auth.js"></script>
         <link rel="stylesheet" href="style.css">
     </head>
-    <body>
-        <h1 class="geauxPark">Geaux Park</h1>
-        <form action=""> <!--backend reference goes in action attribute-->
-            <h2 class="h2">Log In</h2>
-            <div class="container">
-                <label for="loginEmailAddress"><b>Email:</b></label>
-                <input id="loginEmailAddress" placeholder="Type email address" type="email"/>
-                <label for="loginPassword"><b>Password:</b></label>
-                <input id="loginPassword" placeholder="Type a password" type="password"/>
-                <button id="loginSubmission">Log In</button>
-                <a href="signup.html">Sign up and create an account.</a>
-            </div>
-        </form>
+	<body>
+		<h1 class="geauxPark">Geaux Park</h1>
+		<form action="">
+		  <!--backend reference goes in action attribute-->
+		  <h2 class="h2">Log In</h2>
+		  <div class="login-section">
+			<div class="login-email-container">
+			  <input id="login-email" placeholder="Email Address" type="text" />
+			</div>
+			<div class="login-password-container">
+			  <input id="login-password" placeholder="Password" type="text" />
+			</div>
+			<button id="login-submission" class="btn btn-block btn-default">Log In</button>
+		  </div>
+		  <div class="signup-section">
+			<div class="divider">
+			  <hr>
+			</div>
+			<button id="signup-submission" href="signup.html">Sign Up for Geaux Park</button>
+		  </div>
+		</form>
     </body>
 </html>
+

@@ -1,18 +1,23 @@
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <title>Geaux Park</title>
+        <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+        <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
+        <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase-auth.js"></script>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <link rel="stylesheet" href="style.css">
         <h1 class="geauxPark">Geaux Park</h1>
         <form action=""> <!--backend reference goes in action attribute-->
             <h2 class="h2">Log In</h2>
             <div class="container">
                 <label for="loginEmailAddress"><b>Email:</b></label>
-                <input id="loginEmailAddress" placeholder="Type email address" type="text"/>
+                <input id="loginEmailAddress" placeholder="Type email address" type="email"/>
                 <label for="loginPassword"><b>Password:</b></label>
-                <input id="loginPassword" placeholder="Type a password" type="text"/>
+                <input id="loginPassword" placeholder="Type a password" type="password"/>
                 <button id="loginSubmission">Log In</button>
                 <a href="signup.html">Sign up and create an account.</a>
             </div>

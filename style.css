@@ -3,7 +3,8 @@
 form {}
 
 /* Full-width inputs */
-input[type=email],
+
+input[type=text],
 input[type=password] {
   width: 100%;
   padding: 12px 20px;
@@ -26,12 +27,13 @@ button {
   border: none;
   cursor: pointer;
   width: 100%;
-  font-family: 'Montserrat', sans-serif;;
+  font-family: 'Montserrat', sans-serif;
+  ;
 }
 
-/*Style for Geaux Park header */
+/*Style for Tiger Parking header */
 
-.geauxPark {
+.tiger-parking {
   text-align: center;
   color: #FCCF22;
   background-color: #3B1869;

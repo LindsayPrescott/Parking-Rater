@@ -3,7 +3,7 @@
 
   <head>
     <meta charset="utf-8">
-    <title>Tiger Parking</title>
+    <title>Log In</title>
     <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
     <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
@@ -14,14 +14,13 @@
   <body>
     <h1 class="tiger-parking">Tiger Parking</h1>
     <form action="">
-      <!--backend reference goes in action attribute-->
       <h2 class="h2">Log In</h2>
       <div class="login-section">
         <div class="login-email-container">
           <input id="login-email" placeholder="Email Address" type="text" />
         </div>
         <div class="login-password-container">
-          <input id="login-password" placeholder="Password" type="text" />
+          <input id="login-password" placeholder="Password" type="password" />
         </div>
         <button id="login-submission" class="btn btn-block btn-default">Log In</button>
       </div>
@@ -29,8 +28,9 @@
         <div class="divider">
           <hr>
         </div>
-        <button id="signup-submission" href="signup.html">Sign Up for Tiger Parking</button>
+        <button href="signup.html">Sign Up for Tiger Parking</button>
       </div>
+      <a href="main.html">Cancel</a>
     </form>
   </body>
 

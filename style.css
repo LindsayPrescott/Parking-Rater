@@ -66,32 +66,75 @@ button:hover {
   }
 }
 
-/* Nav bar CSS */
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-  }
+/* Navigation Bar and General Website Background CSS */
+/* If changed be sure to test. Multiple parts form the style*/
+body {
+  margin: 0;
+  background: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 100;
+}
 
-  .navLink {
-    float: left;
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
 
-  #navLogin {
-    float: right; 
-    color:  white;
-    text-align: center;
-    padding: 14px 16px;
-  }
+header {
+  background: #3B1869;
+}
 
-  /* Change the link color to #111 (black) on hover */
-  li a:hover {
-    background-color: #3B1869;
-  }
+header::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.logo {
+  float: left;
+  padding: 10px 0;
+  color: #FCCF22;
+  text-align: center;
+  width: auto;
+  padding: 0.6rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  align-items: center;
+  font-weight: lighter;
+}
+
+nav {
+  float: right;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+nav li {
+  display: inline-block;
+  margin-left: 70px;
+  padding-top: 15px;
+  position: relative;
+}
+
+nav a {
+  color: #FCCF22;
+  text-align: center;
+  width: auto;
+  padding: 0.6rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  display: inline-flex;
+  text-decoration: none;
+  align-items: center;
+  font-weight: lighter;
+}
+
+nav a:hover {
+  background: #FCCF22;
+  color: #3B1869;
+  opacity: 50%;
+}

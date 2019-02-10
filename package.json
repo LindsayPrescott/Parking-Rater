@@ -2,7 +2,7 @@
   "name": "parking-rater",
   "version": "1.0.0",
   "description": "TigerParking",
-  "main": "index.js",
+  "main": "main.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

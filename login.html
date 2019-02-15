@@ -14,13 +14,15 @@
       <h2 class="h2">Log In</h2>
       <div class="container">
         <div class="login-email-container">
-          <input id="login-email" placeholder="Email Address" type="text" />
+          <input id="loginEmailAddress" placeholder="Email Address" type="text" />
         </div>
         <div class="login-password-container">
-          <input id="login-password" placeholder="Password" type="password" />
+          <input id="loginPassword" placeholder="Password" type="password" />
         </div>
-        <button id="login-submission" class="btn btn-block btn-default">Submit</button>
-        <a href="signup.html">Sign Up for Tiger Parking</a> <br>
+        <div class=submitButtons>
+            <input id="loginSubmission" type="submit" onclick="location.href='rating.html'"value="Log in"/>
+            <input id="signupSubmission" type="submit" onclick="location.href='rating.html'"value="Sign up"/>
+      </div>
         <a href="main.html">Cancel</a>
       </div>
   </body>

@@ -2,6 +2,75 @@
 
 /* Full-width inputs */
 
+
+/*Style for rating.html */
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+div#overlay{
+	display: none;
+	z-index: 2;
+	background: #000;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	text-align: center;
+	}
+	
+	div#lot-window{
+		display: none;
+		position: fixed;
+		z-index: 3;
+		width: 70%;
+		height: 70%;
+		background: #FFF;
+		color: #000;
+		left: 15%;
+		top: 15%;
+		text-align: center;
+		}
+		
+	div#rating-window{
+		display: none;
+		position: fixed;
+		z-index: 3;
+		width: 70%;
+		height: 70%;
+		background: #FFF;
+		color: #000;
+		left: 15%;
+		top: 15%;
+		text-align: center;
+		}
+	div#thank-you-window{
+		display: none;
+		position: fixed;
+		z-index: 3;
+		width: 70%;
+		height: 70%;
+		background: #FFF;
+		color: #000;
+		left: 15%;
+		top: 15%;
+		text-align: center;
+		}
+	p#lot-window-recent-ratings{
+	text-align: left;
+	margin-left: 5%;
+	}
+	button#lot-window-add-rating{
+	position: fixed;
+	text-align: center;
+	top: 80%;
+	left: 47%;
+	}
+/*End for rating.html */
+
 input[type=text],
 input[type=password] {
   width: 100%;
@@ -14,7 +83,8 @@ input[type=password] {
 
 /* Set a style for all buttons */
 
-button {
+/* Needs to be redone */
+.submitButtons {
   height: 40px;
   width: 80px;
   background-color: #3B1869;

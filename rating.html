@@ -58,12 +58,19 @@
 	p#lot-window-recent-ratings{
 	text-align: left;
 	margin-left: 5%;
+	width: 27%
 	}
 	button#lot-window-add-rating{
 	position: fixed;
 	text-align: center;
 	top: 80%;
-	left: 47%;
+	left: 46%;
+	}
+	button#lot-window-close{
+	position: fixed;
+	text-align: center;
+	top: 80%;
+	left: 51%;
 	}
 }
 	</style>
@@ -85,11 +92,11 @@
 		<br>
 		<br>
 		<p>Average rating will go here</p>
-		<p id='lot-window-recent-ratings'>
+		<p id='lot-window-recent-ratings' style="overflow-y: scroll; height:50%;">
 		Empty Text
 		</p>
 		<button id="lot-window-add-rating" onclick="pullUpRatingWindow()">Add Rating</button>
-		<button id='close-window' onclick = "closeWindow()">Close</button>
+		<button id='lot-window-close' onclick = "closeWindow()">Close</button>
 	</div>
 	<div id="rating-window">
 		<h3>Rate how full the lot is</h3>

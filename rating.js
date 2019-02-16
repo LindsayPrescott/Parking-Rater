@@ -42,8 +42,8 @@ function getRecentRatings(lot)
 		ratingsText.innerHTML = "Recent ratings: <br><br>";
 		db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot) => {
 			let i = snapshot.size - 1;
-			maxRatings = 20;//maximum amount of ratings to show in the log
-			while (i > 0 && maxRatings > 0)
+			maxRatings = 100;//maximum amount of ratings to show in the log
+			while (i >= 0 && maxRatings > 0)
 			{
 				let doc = snapshot.docs[i];
 				let data = doc.data();

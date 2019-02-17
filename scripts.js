@@ -1,5 +1,7 @@
 (function() {
     // Initialize Firebase
+    var firebase = require("firebase/app");
+    
     var config = {
 		apiKey: "AIzaSyAuESVoqcb8AdYx4Xra6hBXPX0ZL6UvDIY",
 		authDomain: "tigerparking.firebaseapp.com",
@@ -10,6 +12,7 @@
 	};
 	firebase.initializeApp(config);
     
+    const app = firebase.app();
     const auth = firebase.auth();
 	const db = firebase.firestore();
 
@@ -45,4 +48,4 @@
             console.log("Not logged in.");
         }
     });
-}());
+});

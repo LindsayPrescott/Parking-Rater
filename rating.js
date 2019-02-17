@@ -113,3 +113,27 @@ function submitRating()
 			});
 	pullUpThankYouWindow();
 }
+function averageRating(lot);
+{
+	var average;
+	var total=0;
+	db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot) => {
+			let i = snapshot.size - 1;
+			maxRatings = 100;//maximum amount of ratings to show in the log
+			while (i >= 0 && maxRatings > 0)
+			{
+				let doc = snapshot.docs[i];
+				let data = doc.data();
+				let timeDif = howLongAgo(data.time.toDate());
+				if (timeDif<1)
+				{
+					average += data.score;
+					total++;
+				};
+				i--;
+				maxRatings--;
+			};
+		});
+	average = average/total;
+	return average;
+}

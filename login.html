@@ -3,10 +3,25 @@
   <head>
     <meta charset="utf-8">
     <title>Log In</title>
-    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.3/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-firestore.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAuESVoqcb8AdYx4Xra6hBXPX0ZL6UvDIY",
+        authDomain: "tigerparking.firebaseapp.com",
+        databaseURL: "https://tigerparking.firebaseio.com",
+        projectId: "tigerparking",
+        storageBucket: "tigerparking.appspot.com",
+        messagingSenderId: "360909428304"
+      };
+      firebase.initializeApp(config);
+    </script>
     <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
-    <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase-auth.js"></script>
+    <script src="scripts.js"></script>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -21,7 +36,7 @@
         </div>
         <div class=submitButtons>
             <input id="loginSubmission" type="submit" onclick="location.href='rating.html'"value="Log in"/>
-            <input id="signupSubmission" type="submit" onclick="location.href='rating.html'"value="Sign up"/>
+            <button id="signupSubmission" onclick="location.href='rating.html'">Sign Up</button>
       </div>
         <a href="main.html">Cancel</a>
       </div>

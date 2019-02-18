@@ -1,6 +1,5 @@
 (function() {
     // Initialize Firebase
-    var firebase = require("firebase/app");
     
     var config = {
 		apiKey: "AIzaSyAuESVoqcb8AdYx4Xra6hBXPX0ZL6UvDIY",
@@ -12,15 +11,14 @@
 	};
 	firebase.initializeApp(config);
     
-    const app = firebase.app();
     const auth = firebase.auth();
 	const db = firebase.firestore();
 
     //Get elements
-    const loginEmailAddress = document.getElementById(loginEmailAddress);
-    const loginPassword = document.getElementById(loginPassword);
-    const loginSubmission = document.getElementById(loginSubmission);
-    const signupSubmission = document.getElementById(signupSubmission);
+    var loginEmailAddress = document.getElementById(loginEmailAddress);
+    var loginPassword = document.getElementById(loginPassword);
+    var loginSubmission = document.getElementById(loginSubmission);
+    var signupSubmission = document.getElementById(signupSubmission);
 
     //Login event
     loginSubmission.addEventListener('click', e => {
@@ -31,8 +29,10 @@
         promise.catch(e => console.log(e.message));
     })
 
+    console.log("init");
     //Signup event
     signupSubmission.addEventListener('click', e =>{
+        console.log("init");
         const email = loginEmailAddress.value;
         const pass = loginPassword.value;
         const auth = firebase.auth();

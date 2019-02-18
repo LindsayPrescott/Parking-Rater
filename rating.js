@@ -113,7 +113,7 @@ function submitRating()
 			});
 	pullUpThankYouWindow();
 }
-function averageRating(lot);
+function averageRating(lot)
 {
 	var average;
 	var total=0;

@@ -1,3 +1,4 @@
+// firebase stuff dont mess with it
 import firebase from "firebase";
 // Initialize Firebase
 var config = {

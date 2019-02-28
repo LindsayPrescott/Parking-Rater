@@ -1,0 +1,21 @@
+[debug] [2019-02-11T20:31:47.155Z] ----------------------------------------------------------------------
+[debug] [2019-02-11T20:31:47.156Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\GJA\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2019-02-11T20:31:47.157Z] CLI Version:   6.3.1
+[debug] [2019-02-11T20:31:47.157Z] Platform:      win32
+[debug] [2019-02-11T20:31:47.157Z] Node Version:  v10.15.1
+[debug] [2019-02-11T20:31:47.157Z] Time:          Mon Feb 11 2019 14:31:47 GMT-0600 (Central Standard Time)
+[debug] [2019-02-11T20:31:47.157Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-11T20:31:47.164Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-11T20:31:47.164Z] > authorizing via signed-in user
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  D:\Projects\Parking-Rater
+

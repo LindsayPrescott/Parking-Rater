@@ -1,18 +1,13 @@
+/* eslint-disable no-unused-expressions */
+//import adminmin for firebase
+var admin = require('firebase-admin');
 (function() {
     // Initialize Firebase
+    // deleted firebase auth as its done somewhere else
+ 
     
-    var config = {
-		apiKey: "AIzaSyAuESVoqcb8AdYx4Xra6hBXPX0ZL6UvDIY",
-		authDomain: "tigerparking.firebaseapp.com",
-		databaseURL: "https://tigerparking.firebaseio.com",
-		projectId: "tigerparking",
-		storageBucket: "tigerparking.appspot.com",
-		messagingSenderId: "360909428304"
-	};
-	firebase.initializeApp(config);
-    
-    const auth = firebase.auth();
-	const db = firebase.firestore();
+    const auth = admin.auth();
+	const db = admin.firestore();
 
     //Get elements
     var loginEmailAddress = document.getElementById(loginEmailAddress);
@@ -41,7 +36,7 @@
     })
     
     //realtime listener
-    firebase.auth().onAuthStateChanged(firebaseUser => { 
+    admin.auth().onAuthStateChanged(firebaseUser => { 
         if(firebaseUser){
             console.log(firebaseUser);
         } else {

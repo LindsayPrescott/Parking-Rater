@@ -1,7 +1,7 @@
 // firebase stuff dont mess with it
-import firebase from "firebase";
+import app from 'firebase/app';
 // Initialize Firebase
-var config = {
+const config = {
   apiKey: "AIzaSyAuESVoqcb8AdYx4Xra6hBXPX0ZL6UvDIY",
   authDomain: "tigerparking.firebaseapp.com",
   databaseURL: "https://tigerparking.firebaseio.com",
@@ -9,4 +9,11 @@ var config = {
   storageBucket: "tigerparking.appspot.com",
   messagingSenderId: "360909428304"
 };
-firebase.initializeApp(config);
+
+class Firebase{
+  constructor() {
+    app.initializeApp(config);
+  }
+}
+
+export default Firebase;

@@ -1,4 +1,4 @@
-// firebase stuff dont mess with it
+// firebase stufff this is where I'll be implementing the ApI for all firebase related stuffs
 import app from 'firebase/app';
 // Initialize Firebase
 const config = {

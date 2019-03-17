@@ -2,6 +2,75 @@
 
 /* Full-width inputs */
 
+/*Style for main page - NO TOUCHY*/
+
+#main-body {
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(proxy.duckduckgo.com.jpg);
+  height: 100vh; 
+  background-size: cover;
+  background-position: center;
+}
+
+.login-page {
+  width: 360px; 
+  padding: 10% 0 0;
+  margin: auto;
+}
+
+.form{
+  position: relative;
+  z-index: 1;
+  background: rgba(7,40,195,0.8);
+  max-width: 360px;
+  margin: 0 auto 100px; 
+  padding: 45px;
+  text-align: center; 
+}
+
+.form input {
+  font-family: "Roboto", sans-serif;
+  outline: 1;
+  background: #ffffff;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px; 
+}
+
+.form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #3B1869;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.form button:hover,.form button:active{
+  background: black;
+}
+
+.form .message{
+  margin: 15px;
+  color: aliceblue;
+  font-size: 12px;
+}
+
+.form .message a{
+  color: black;
+  text-decoration: none;
+}
+
+.form .register-form {
+  display: none;
+}
+
+/*End of main page sytle*/
 
 /*Style for rating.html */
 .center {
@@ -71,33 +140,9 @@ div#overlay{
 	}
 /*End for rating.html */
 
-input[type=text],
-input[type=password] {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
 /* Set a style for all buttons */
 
-/* Needs to be redone */
-.submitButtons {
-  height: 40px;
-  width: 80px;
-  background-color: #3B1869;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border-radius: 40px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  font-family: 'Montserrat', sans-serif;
-  ;
-}
+
 
 /*Style for Tiger Parking header */
 

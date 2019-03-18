@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class navRatingHTML extends Component {
+class NavbarRating extends Component {
     render(){
         return( 
             <header>
@@ -16,4 +16,4 @@ class navRatingHTML extends Component {
         );
     }
 };
-export default navRatingHTML; 
+export default NavbarRating; 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import "./styles.css";
 
-class NavMainHTML extends Component {
+class NavbarMain extends Component {
     render() {
         return (
             <header>
@@ -19,4 +19,4 @@ class NavMainHTML extends Component {
     }
 }
 
-export default NavMainHTML;
+export default NavbarMain;

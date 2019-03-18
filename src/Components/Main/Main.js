@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "./style.css";
 
-class MainPage extends Component {
+class Main extends Component {
     render() {
       return (
     <div>
@@ -35,7 +35,7 @@ class MainPage extends Component {
 		</div>
 		<script>
 			$('.message a').click(function(){
-				$('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+				$('form').animate({height: "toggle", opacity: "toggle"}, "slow")
 			})
 		</script>
 	</div>
@@ -43,4 +43,4 @@ class MainPage extends Component {
     }
   }
 
-  export default MainPage;
+  export default Main;

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 
-class ratingHTML extends Component {
+
+
+class Rating extends Component {
     render(){
         return(    
             <body>
@@ -11,7 +13,7 @@ class ratingHTML extends Component {
                     <br />
                     <br />
                     <p>Average rating will go here</p>
-                    <p id='lot-window-recent-ratings' style="overflow-y: scroll; height:50%;">
+                    <p id='lot-window-recent-ratings' style=link css sheet here needs object>
                     Empty Text
                     </p>
                     <button id="lot-window-add-rating" onclick="pullUpRatingWindow()">Add Rating</button>
@@ -32,7 +34,7 @@ class ratingHTML extends Component {
                     <h3>Thank you for rating!</h3>
                     <button id='close-window' onclick='closeWindow()'>Close</button>
                 </div>
-                <img class="center" src="parkingmap.png" usemap="#image-map" />
+                <img class="center" src="parkingmap.png" usemap="#image-map" alt='' />
                 <map name="image-map">
                     <area target="" alt="South CEBA" title="Business Lot" onclick="mapPress('Business Lot')" coords="980,820,962,880,1110,905,1085,838" shape="poly" />
                     <area target="" alt="Patrick Taylor" title="Patrick Taylor" onclick="mapPress('Patrick Taylor Lot')" coords="797,761,824,852,941,885,973,805" shape="poly" />
@@ -54,3 +56,4 @@ class ratingHTML extends Component {
                 );
                 };
                 };
+export default Rating;

@@ -1,8 +1,8 @@
 import React from 'react';
 
-const SignUp = () => (
+const NavBarRating = () => (
   <div>
-    <h1>SignUp</h1>
+    <h1>NavBarRating</h1>
   </div>
 );
 

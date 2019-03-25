@@ -25,6 +25,34 @@ class LotWindow
 
 var lotWindow;
 
+class howLongAgo {
+	constructor(time)
+	{
+		this.diff = new Date().getTime() - time.getTime();
+	}
+	
+	howLongAgoHours()
+	{
+		return Math.round(this.diff/3600000);
+	}
+	
+	howLongAgoMinutes()
+	{
+		return Math.round(this.diff/60000);
+	}
+	howLongAgoSeconds()
+	{
+		return Math.round(this.diff/1000);
+	}
+	howLongAgoToString()
+	{
+		let hours = howLongAgoHours();
+		let minutes = Math.round(this.diff%3600000);
+		let seconds = Math.round(this.diff%216000000);
+		return hours.toString() + " hours, " + minutes.toString() + " minutes, " + seconds.toString() + " seconds ago";
+	}
+}
+
 function howLongAgoString(time)
 {
 	let difInMilis = new Date().getTime() - time.getTime();
@@ -36,10 +64,7 @@ function howLongAgoString(time)
 	let seconds = Math.round(difInSeconds);
 	return hours.toString() + " hours, " + minutes.toString() + " minutes, " + seconds.toString() + " seconds ago";
 }
-function howLongAgoHours(time)
-{
-	let difInhours = (new Date().getTime() - time.getTime())/3600000;
-}
+
 function getRecentRatings(lot)
 	{
 		let ratingsText = document.getElementById('lot-window-recent-ratings');
@@ -58,8 +83,9 @@ function getRecentRatings(lot)
 				maxRatings--;
 				};
 			});
-		let average = document.getElementById('average');
-		average.innerHTML = "Average Rating for the past hour: " + averageRating(lot);
+		let averageText = document.getElementById('average');
+		let average = averageRating(lot);
+		averageText.innerHTML = "Average Rating for the past hour: " + average;
 	}			
 	
 function mapPress(lot)
@@ -144,7 +170,7 @@ function averageRating(lot) //naive average
 }
 class ExponentialMovingAverage //weighted average found on https://dev.to/nestedsoftware/exponential-moving-average-on-streaming-data-4hhl
 {
-    constructor(alpha, initialMean) 
+    constructor(alpha, initialMean) //constructor
 	{
         this.alpha = alpha
         this.mean = !initialMean ? 0 : initialMean
@@ -158,4 +184,7 @@ class ExponentialMovingAverage //weighted average found on https://dev.to/nested
 
         this.mean = newMean
     }
+	get mean() {
+		return this.mean;
+	}
 }

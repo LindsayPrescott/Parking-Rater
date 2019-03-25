@@ -118,7 +118,7 @@ function submitRating()
 			});
 	pullUpThankYouWindow();
 }
-function averageRating(lot)
+function averageRating(lot) //naive average
 {
 	var average;
 	var total=0;
@@ -142,7 +142,7 @@ function averageRating(lot)
 	average = average/total;
 	return average;
 }
-class ExponentialMovingAverage 
+class ExponentialMovingAverage //weighted average found on https://dev.to/nestedsoftware/exponential-moving-average-on-streaming-data-4hhl
 {
     constructor(alpha, initialMean) 
 	{

@@ -25,7 +25,7 @@ class LotWindow
 
 var lotWindow;
 
-function howLongAgo(time)
+function howLongAgoString(time)
 {
 	let difInMilis = new Date().getTime() - time.getTime();
 	let difInSeconds = difInMilis / 1000;
@@ -35,6 +35,10 @@ function howLongAgo(time)
 	difInSeconds = difInSeconds % 60;
 	let seconds = Math.round(difInSeconds);
 	return hours.toString() + " hours, " + minutes.toString() + " minutes, " + seconds.toString() + " seconds ago";
+}
+function howLongAgoHours(time)
+{
+	let difInhours = (new Date().getTime() - time.getTime())/3600000;
 }
 function getRecentRatings(lot)
 	{
@@ -48,13 +52,14 @@ function getRecentRatings(lot)
 				let doc = snapshot.docs[i];
 				let data = doc.data();
 				ratingsText.innerHTML += "Score: " + data.score;
-				let timeDif = howLongAgo(data.time.toDate());
+				let timeDif = howLongAgoString(data.time.toDate());
 				ratingsText.innerHTML += " - " + timeDif + "<br>";
 				i--;
 				maxRatings--;
 				};
 			});
-			
+		let average = document.getElementById('average');
+		average.innerHTML = "Average Rating for the past hour: " + averageRating(lot);
 	}			
 	
 function mapPress(lot)
@@ -124,7 +129,7 @@ function averageRating(lot)
 			{
 				let doc = snapshot.docs[i];
 				let data = doc.data();
-				let timeDif = howLongAgo(data.time.toDate());
+				let timeDif = howLongAgoHours(data.time.toDate());
 				if (timeDif<1)
 				{
 					average += data.score;

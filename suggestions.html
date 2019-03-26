@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="us">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery UI Example Page</title>
+	<link href="jquery-ui/jquery-ui.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+	   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+	   crossorigin=""/>
+	<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+	   integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+	   crossorigin=""></script>
+</head>
+<body onload="getLocations()">
+
+<style>
+#overlay {
+	height: 100vh;
+	width: 100vw;
+	background-color: #000000;
+	opacity: 0.5;
+	position: fixed;
+	left: 0;
+	top: 0;
+	display: none;
+	}
+#window {
+	top: 10vh;
+	left: 15vw;
+	height: 80vh;
+	width: 70vw;
+	background-color: #FFFFFF;
+	opacity: 1;
+	position: fixed;
+	display: none;
+	z-index: 1;
+	}
+#lot-sidebar {
+	top: 0vh;
+	left: 0vw;
+	height: 100vh;
+	width: 20vw;
+	background-color: #D3D3D3;
+	opacity: 1;
+	position: fixed;
+	display: none;
+	z-index: 1;
+	animation-direction: normal;
+	overflow-y: scroll;
+	}
+#lot-window-lot {
+	background-color: #D3D3D3;
+	}
+	
+#mapid {
+	height: 80vh;
+	width: 60vw;
+	position: fixed;
+	left: 20vw;
+	top: 12vh;
+	z-index: -1;
+	}
+.big-center {
+	text-align: center;
+	font-size: 150%;
+	font-weight: bold;
+	}
+.left {
+	text-align: left;
+	position: fixed;
+	left: 0vw;
+	top: 0vh;
+	}
+.center
+	{
+	text-align: center;
+	}
+	
+	
+</style>
+
+<script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-firestore.js"></script>
+<script src="firebaseinit.js"></script>
+
+<!-- Autocomplete -->
+<h2 class="demoHeaders">Enter a location</h2>
+<div>
+	<input id="autocomplete" title="type &quot;a&quot;"></input>
+	<button id="select-location" onclick="selectLocation()">Select Location</button>
+</div>
+<br>
+<div>
+	<p>Is your location not in our database? <br>
+	You can contribue by adding it. <button id="add-location" onclick="openAddLocationMenu()">Add Location</button>
+	</p>
+</div>
+
+
+<div id = 'overlay'></div>
+
+<div id = 'lot-sidebar' >
+	<button class = 'left' onclick = "closeLotSidebar()">Close</button>
+	<p class = 'big-center'>
+		Closest lots:
+	</p>
+	<div id = 'lot-scrollbar'></div>
+</div>
+<div id = 'window'>
+	Enter the name of the location: <input id='location-name'></input>
+	<p/><p/>
+	Enter the coordinates of the location, seperated by a comma. <input id='location-coordinates'></input>
+	<p/><p/>
+	<button id = 'submit-location' onclick="submitLocation()">Submit Location</button>
+	<p/>
+	<button id = 'close-window' onclick="closeWindow()">Cancel</button>
+</div>
+<div id="mapid"></div>
+<script src="jquery-ui/external/jquery/jquery.js"></script>
+<script src="jquery-ui/jquery-ui.js"></script>
+<script>
+
+//LEAFLET MAP
+var mymap = L.map('mapid').setView([30.410447, -91.179332], 16);
+			
+		function onMapClick(e) {
+		 alert("You clicked the map at " + e.latlng);
+		}
+		mymap.on('click', onMapClick);
+		
+		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+			maxZoom: 18,
+			id: 'mapbox.streets',
+			accessToken: 'pk.eyJ1IjoiZGF0a2kxMSIsImEiOiJjanRnbWN6bGcwN2VpNDNxc2c1NXBpZjc5In0.AwfsXeahKCgjTeXM77P1zQ'
+		}).addTo(mymap);
+		
+//END OF LEAFLET MAP	
+		
+function openAddLocationMenu() {
+	document.getElementById('overlay').style.display = "block";
+	var window = document.getElementById('window');
+	window.style.display = "block";
+}
+
+function closeWindow() {
+	document.getElementById('overlay').style.display = "none";
+	var window = document.getElementById('window');
+	window.style.display = "none";
+}
+
+function submitLocation() {
+	var _name = document.getElementById('location-name').value.trim();
+	var coordinates = document.getElementById('location-coordinates').value.trim();
+	var i = coordinates.indexOf(',');
+	if (i == -1)
+	{
+		alert('Please put a comma inbetween your latitude and longitude');
+		return
+	}
+	var _latitude = parseFloat( coordinates.slice(0,i-1) );
+	var _longitude = parseFloat( coordinates.slice(i+1,coordinates.length-1) );
+	
+	db.collection('Location').add({
+		name: _name,
+		latitude: _latitude,
+		longitude: _longitude
+	});
+	locations.push({
+		label: _name,
+		latitude: _latitude,
+		longitude: _longitude
+	});
+	closeWindow();
+}
+
+var locations = [];
+function getLocations() {
+	db.collection('Location').get().then((snapshot) => {
+		let i = snapshot.size - 1;
+		while (i >= 0)
+		{
+			let doc = snapshot.docs[i];
+			let data = doc.data();
+			locations.push({
+				label: data.name,
+				latitude: data.latitude,
+				longitude: data.longitude
+				});
+			i--;
+		}
+	});
+
+}
+
+var lots = [
+	{label: "South Ceba Lot",
+	center: [30.404997, -91.177018],
+	polygon: [[30.405781, -91.178042],[30.405493, -91.176206],[30.404669, -91.175576], [30.404327, -91.175694], [30.404729, -91.178344]]},
+	{label: "Patrick F Taylor Lot",
+	center: [30.405645, -91.179957],
+	polygon: [[30.406772, -91.181393], [30.406048, -91.178412], [30.404503, -91.178788], [30.40515, -91.181105], [30.405604, -91.180977],  [30.405792, -91.181653], [30.40631, -91.181486], [30.406344, -91.18162]]},
+	{label: "West Parker Boulevard Lot",
+	center: [30.404441, -91.174716],
+	polygon: [[30.405005, -91.175011], [30.404482, -91.174099], [30.403802, -91.174813], [30.404219, -91.174909], [30.404755, -91.175231]]},
+	{label: "East Parker Boulevard Lot",
+	center: [30.406161, -91.173096],
+	polygon: [[30.405780, -91.174560], [30.406159, -91.173820], [30.406224, -91.173310], [30.406867, -91.172720], [30.406437, -91.171991], [30.405637, -91.172913], [30.405937, -91.173750], [30.405535, -91.174206]]},
+	{label: "Public Safety Lot",
+	center: [30.410307, -91.185064],
+	polygon: [[30.410968, -91.186234],[30.41051, -91.183729], [30.409613, -91.183911], [30.410025, -91.186164]]},
+	{label: "Skip Bertman Drive East Lot",
+	center: [30.410529, -91.187248],
+	polygon: [[30.411199, -91.187945], [30.410993, -91.186718], [30.409865, -91.186745], [30.409900, -91.187526]]},
+	{label: "ECE West Lot",
+	center: [30.409303, -91.185257],
+	polygon: [[30.409717, -91.185798], [30.409437, -91.184688], [30.408709, -91.184945], [30.408776, -91.185157], [30.409418, -91.185712]]},
+	{label: "West Stadium Lot",
+	center: [30.411815, -91.185762],
+	polygon: [[30.412009, -91.186091], [30.412018, -91.185341], [30.411690, -91.185268], [30.411468, -91.186094]]},
+	{label: "Tiger Park East Lot",
+	center: [30.410733, -91.191373],
+	polygon: [[30.411819, -91.191655], [30.411662, -91.190851], [30.410046, -91.191128], [30.409948, -91.190693], [30.408949, -91.190784], [30.409034, -91.191019], [30.409872, -91.190913], [30.410173, -91.192013]]},
+	{label: "Tiger Park North Lot",
+	center: [30.411713, -91.192451],
+	polygon: [[30.412082, -91.192907], [30.411912, -91.191848], [30.411284, -91.191985], [30.411474, -91.193022]]},
+	{label: "Bernie Moore Lot",
+	center: [30.414887, -91.186947],
+	polygon: [[30.415380, -91.187211], [30.415369, -91.186723], [30.413497, -91.186693], [30.414466, -91.186766], [30.414477, -91.187081]]},
+	{label: "Burden Oak Lot",
+	center: [30.416561, -91.186325],
+	polygon: [[30.415515, -91.187107], [30.415469, -91.186413], [30.416369, -91.186246], [30.416889, -91.186224], [30.416817, -91.185347], [30.417016, -91.185294], [30.417075, -91.186208], [30.417569, -91.186216],  [30.417641, -91.187088], [30.417484, -91.187104], [30.417442, -91.186330], [30.416395, -91.186406], [30.415806, -91.186508], [30.415799, -91.187081]]},
+	{label: "Natorium Lot",
+	center: [30.417667, -91.185654],
+	polygon: [[30.417783, -91.186084], [30.417741, -91.185118], [30.417468, -91.185166], [30.417542, -91.186094]]},
+	{label: "Nicholson Extension West Lot",
+	center: [30.40717, -91.184072],
+	polygon: [[30.407750, -91.184726], [30.407412, -91.183472], [30.406731, -91.183702], [30.406458, -91.183002], [30.406062, -91.183156], [30.406101, -91.183363], [30.406447, -91.183242], [30.406723, -91.184108], [30.407167, -91.184550]]},
+	{label: "Ag Center Lot",
+	center: [30.40811, -91.175172],
+	polygon: [[30.408297, -91.175771], [30.408307, -91.175343], [30.408611, -91.175328], [30.408618, -91.174467], [30.407934, -91.174664], [30.407820, -91.175092], [30.407509, -91.175309], [30.407492, -91.175752]]},
+	{label: "Nicholson Drive Strip",
+	center: [30.416177, -91.187291],
+	polygon: [[30.414461, -91.187119], [30.414989, -91.18721], [30.415391, -91.187232], [30.416002, -91.187253], [30.417861, -91.187301], [30.417856, -91.187371], [30.416936, -91.187333], [30.416039, -91.187301], [30.415599, -91.18728], [30.414998, -91.187258], [30.414466, -91.187173]]}
+	
+	];
+
+currentLocationMarker = null
+function selectLocation() {
+	
+	var name = document.getElementById('autocomplete').value;
+	var obj = locations.find(o => o.label.toLowerCase() === name.toLowerCase());
+	if (obj == null)
+		return alert('NO LOCATION FOUND');
+	var latitude = obj.latitude;
+	var longitude = obj.longitude;
+	if (currentLocationMarker == null)
+	{
+		currentLocationMarker = L.marker([latitude, longitude]).addTo(mymap)
+			.bindPopup(name)
+			.openPopup();
+	}
+	else
+	{
+		currentLocationMarker.setLatLng([latitude, longitude])
+			.bindPopup(name)
+			.openPopup();
+	}
+	openLotSidebar(obj);
+}
+
+function openLotSidebar(location) {
+	var sidebar = document.getElementById('lot-sidebar');
+	sidebar.style.display = "block";
+	var dist = [];
+	var R = 6371; // Radius of the earth in km
+	for (var i = 0; i < lots.length; i++)
+	{
+		var latitude = (location.latitude - lots[i].center[0]) * Math.PI / 180;
+		var longitude = (location.longitude - lots[i].center[1]) * Math.PI / 180;
+		var a = 
+			Math.pow(Math.sin(latitude/2),2) +
+			Math.cos(location.latitude) * Math.cos(lots[i].center[0] * Math.PI / 180) * 
+			Math.pow(Math.sin(longitude/2), 2); 
+		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+		var d = R * c * 0.6214; // Distance in miles
+		d *= 1.30; //Since the distance is calculated using a straight line, actual routes to the destination are not taken into account.
+				   //The 30% increase of the distance is to try and mitigate this issue.
+		dist.push({
+			label: lots[i].label,
+			distance: d
+			});
+	}
+	dist.sort(function(a,b) {
+		var distA = a.distance;
+		var distB = b.distance;
+		var comparison = 0; //Grant, if you're reading this, I'm sorry for the cargo-cult looking code, but I had to return a -1 for the false condition :(
+		if (distA > distB)
+			comparison = 1;
+		else
+			comparison = -1;
+		return comparison;
+		});
+	
+	var scrollbar = document.getElementById('lot-scrollbar');
+	for (var i = 0; i < dist.length; i++)
+	{
+		var html = "<div title = '" + dist[i].label + "' id = 'lot-window-lot' onmouseenter='lotMouseOver(this)' onmouseleave='lotMouseLeave(this)' onmouseup='lotMouseUp(this)' onmousedown='lotMouseDown(this)'>" +
+		"<br/>" +
+		"<div class = 'big-center'>" + dist[i].label + "</div>" +
+		"<br/>" +
+		"<div class = 'center'> Distance: " + dist[i].distance.toFixed(2) + " miles" + "&nbsp&nbsp&nbsp&nbsp  Occupancy: N/A </div>" +
+		"<br/>" +
+		"<br/>" +
+		"</div>";
+		scrollbar.innerHTML = scrollbar.innerHTML + html;
+	}
+}
+function closeLotSidebar() {
+	document.getElementById('lot-sidebar').style.display = "none";
+	document.getElementById('lot-scrollbar').innerHTML = "";
+	}
+
+function lotMouseOver(htmlElement) {
+	htmlElement.style.backgroundColor = "#808080";
+	}
+function lotMouseLeave(htmlElement) {
+	htmlElement.style.backgroundColor = "#D3D3D3";
+	}
+function lotMouseDown(htmlElement) {
+	htmlElement.style.backgroundColor = "#545454";
+	}
+
+var currentLotMarker = null;
+var currentLotPolygon = null;
+function lotMouseUp(htmlElement) {
+	htmlElement.style.backgroundColor = "#808080";
+	var obj = lots.find(o => o.label === htmlElement.title);
+	if (currentLotMarker == null)
+	{
+		currentLotMarker = L.marker([obj.center[0], obj.center[1]]).addTo(mymap)
+			.bindPopup(htmlElement.title)
+			.openPopup()
+			.setOpacity(0.5);
+		currentLotPolygon = L.polygon(obj.polygon).addTo(mymap);
+	}
+	else
+	{
+		currentLotMarker.setLatLng([obj.center[0], obj.center[1]])
+			.bindPopup(htmlElement.title)
+			.openPopup()
+			.setOpacity(0.5);
+		currentLotPolygon.setLatLngs(obj.polygon);
+	}	
+}
+$( "#autocomplete" ).autocomplete({
+	source: locations
+});
+
+</script>
+</body>
+</html>

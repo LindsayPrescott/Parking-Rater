@@ -1,7 +1,9 @@
 
+
+
 class LotWindow
 {
-	
+
 	constructor(lot)
 	{
 		this.lot = lot;
@@ -11,7 +13,7 @@ class LotWindow
 		this.recentRatings = document.getElementById('lot-window-recent-ratings');
 		this.ratingWindow = document.getElementById('rating-window');
 		this.thankYouWindow = document.getElementById('thank-you-window');
-		
+
 	}
 	getLot()
 	{
@@ -30,12 +32,12 @@ class howLongAgo {
 	{
 		this.diff = new Date().getTime() - time.getTime();
 	}
-	
+
 	howLongAgoHours()
 	{
 		return Math.round(this.diff/3600000);
 	}
-	
+
 	howLongAgoMinutes()
 	{
 		return Math.round(this.diff/60000);
@@ -85,17 +87,18 @@ function getRecentRatings(lot)
 			});
 		let averageText = document.getElementById('average');
 		let average = averageRating(lot);
-		averageText.innerHTML = "Average Rating for the past hour: " + average;
-	}			
-	
+		var obj = lots.find(o => o.label == lot)
+		averageText.innerHTML = "Average Rating for the past hour: " + obj.averageRating.toFixed(2);
+	}
+
 function mapPress(lot)
 {
 	lotWindow = new LotWindow(lot);
-	
-	
+
+
 	lotWindow.overlay.style.opacity = .5;
 	lotWindow.overlay.style.display = "block";
-	
+
 	lotWindow.lotInfoWindow.style.display = "block";
 	lotWindow.header.style.display = "block";
 	lotWindow.header.innerHTML = lot;
@@ -106,7 +109,7 @@ function pullUpRatingWindow()
 {
 	lotWindow.overlay.style.opacity = .5;
 	lotWindow.overlay.style.display = "block";
-	
+
 	lotWindow.lotInfoWindow.style.display = "none";
 	lotWindow.ratingWindow.style.display = "block";
 }
@@ -118,7 +121,7 @@ function pullUpThankYouWindow()
 }
 function closeWindow()
 {
-	
+
 	lotWindow.overlay.style.display = "none";
 	lotWindow.ratingWindow.style.display = "none";
 	lotWindow.lotInfoWindow.style.display = "none";
@@ -155,7 +158,7 @@ function averageRating(lot) //naive average
 			{
 				let doc = snapshot.docs[i];
 				let data = doc.data();
-				let timeDif = howLongAgoHours(data.time.toDate());
+				let timeDif = new howLongAgo(data.time.toDate()).howLongAgoHours();
 				if (timeDif<1)
 				{
 					average += data.score;
@@ -176,7 +179,7 @@ class ExponentialMovingAverage //weighted average found on https://dev.to/nested
         this.mean = !initialMean ? 0 : initialMean
     }
 
-    update(newValue) 
+    update(newValue)
 	{
         const meanIncrement = this.alpha * (newValue - this.mean)
 

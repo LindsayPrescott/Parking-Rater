@@ -86,10 +86,92 @@ function getRecentRatings(lot)
 				};
 			});
 		let averageText = document.getElementById('average');
-		let average = averageRating(lot);
-		var obj = lots.find(o => o.label == lot)
-		averageText.innerHTML = "Average Rating for the past hour: " + obj.averageRating.toFixed(2);
+		var obj = lots.find(o => o.label == lot);
+		if(obj.averageRating == null)
+		{
+			averageText.innerHTML = "No recent ratings."
+		}
+		else{
+			averageText.innerHTML = "Average Rating for the past hour: " + obj.averageRating.toFixed(2);
+		}
 	}
+function averageRating(lot) //naive average
+{
+	db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot) => {
+			var average = 0.0;
+			var total = 0;
+			let i = snapshot.size - 1;
+			maxRatings = 100;//maximum amount of ratings to show in the log
+			while (i >= 0 && maxRatings > 0)
+			{
+				let doc = snapshot.docs[i];
+				let data = doc.data();
+				let timeDif = new howLongAgo(data.time.toDate());
+				let timeDifHours = timeDif.howLongAgoHours();
+				if (timeDifHours<1)
+				{
+					average += parseFloat(data.score);
+					total++;
+				};
+				i--;
+				maxRatings--;
+			};
+			average = average/total;
+			var obj = lots.find(o => o.label == lot);
+			obj.averageRating = average;
+		});
+}
+function getWeightedAverage(lot) {
+	db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot) => {
+			var average = 0.0;
+			let i = snapshot.size - 1;
+			maxRatings = 100;//maximum amount of ratings to show in the log
+			while (i >= 0 && maxRatings > 0)
+			{
+				let doc = snapshot.docs[i];
+				let data = doc.data();
+				let rating = parseFloat(data.score);
+				if(average == 0) {
+					average = rating;
+				}
+				else {
+					let timeDif = new howLongAgo(data.time.toDate());
+					let timeDifHours = timeDif.howLongAgoHours();
+					if (timeDifHours<1)
+					{
+						let meanIncrement = .3 * (rating - average);
+						let newAverage = average + meanIncrement;
+						average = newAverage;
+					}
+				}
+				i--;
+				maxRatings--;
+			}
+			var obj = lots.find(o => o.label == lot);
+			obj.averageRating = average;
+		});
+}
+
+/* class ExponentialMovingAverage //weighted average found on https://dev.to/nestedsoftware/exponential-moving-average-on-streaming-data-4hhl
+{
+    constructor(alpha, initialMean) //constructor
+	{
+        this.alpha = alpha
+        this.mean = !initialMean ? 0 : initialMean
+    }
+
+    update(newValue)
+	{
+        const meanIncrement = this.alpha * (newValue - this.mean)
+
+        const newMean = this.mean + meanIncrement
+
+        this.mean = newMean
+    }
+	getMean() {
+		return this.mean;
+	}
+} */
 
 function mapPress(lot)
 {
@@ -145,49 +227,8 @@ function submitRating()
 			time: new Date(),
 			user_id: "not defined yet"
 			});
+	getWeightedAverage(lotWindow.getLot());
 	pullUpThankYouWindow();
 }
-function averageRating(lot) //naive average
-{
-	var average;
-	var total=0;
-	db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot) => {
-			let i = snapshot.size - 1;
-			maxRatings = 100;//maximum amount of ratings to show in the log
-			while (i >= 0 && maxRatings > 0)
-			{
-				let doc = snapshot.docs[i];
-				let data = doc.data();
-				let timeDif = new howLongAgo(data.time.toDate()).howLongAgoHours();
-				if (timeDif<1)
-				{
-					average += data.score;
-					total++;
-				};
-				i--;
-				maxRatings--;
-			};
-		});
-	average = average/total;
-	return average;
-}
-class ExponentialMovingAverage //weighted average found on https://dev.to/nestedsoftware/exponential-moving-average-on-streaming-data-4hhl
-{
-    constructor(alpha, initialMean) //constructor
-	{
-        this.alpha = alpha
-        this.mean = !initialMean ? 0 : initialMean
-    }
 
-    update(newValue)
-	{
-        const meanIncrement = this.alpha * (newValue - this.mean)
 
-        const newMean = this.mean + meanIncrement
-
-        this.mean = newMean
-    }
-	get mean() {
-		return this.mean;
-	}
-}

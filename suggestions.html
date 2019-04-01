@@ -224,6 +224,7 @@ function openLotSidebar(location) {
 	var sidebar = document.getElementById('lot-sidebar');
 	sidebar.style.display = "block";
 	var dist = [];
+	var occupancy = [];
 	var R = 6371; // Radius of the earth in km
 	for (var i = 0; i < lots.length; i++)
 	{
@@ -241,6 +242,49 @@ function openLotSidebar(location) {
 			label: lots[i].label,
 			distance: d
 			});
+		getWeightedAverage(lots[i].label)
+		if (parseFloat(lots[i].averageRating)<=1.1)
+		{
+			occupancy.push({
+				label: lots[i].label,
+				occupancy: "Pretty darn empty"
+			});
+		}
+		else if (parseFloat(lots[i].averageRating)<=2.5)
+		{
+			occupancy.push({
+				label: lots[i].label,
+				occupancy: "Fairly empty, the best spots are likely taken."
+			});
+		}
+		else if (parseFloat(lots[i].averageRating)<=3.5)
+		{
+			occupancy.push({
+				label: lots[i].label,
+				occupancy: "Just about half full, or half empty..."
+			});
+		}
+		else if (parseFloat(lots[i].averageRating)<=4.5)
+		{
+			occupancy.push({
+				label: lots[i].label,
+				occupancy: "Pretty Darn Full, but you can likely find a spot or two."
+			});
+		}
+		else if (parseFloat(lots[i].averageRating)<=5.1)
+		{
+			occupancy.push({
+				label: lots[i].label,
+				occupancy: "Full, good luck finding a parking spot."
+			});
+		}
+		else
+		{
+			occupancy.push({
+				label: lots[i].label,
+				occupancy: "Error."
+			});
+		}
 	}
 	dist.sort(function(a,b) {
 		var distA = a.distance;
@@ -260,7 +304,7 @@ function openLotSidebar(location) {
 		"<br/>" +
 		"<div class = 'big-center'>" + dist[i].label + "</div>" +
 		"<br/>" +
-		"<div class = 'center'> Distance: " + dist[i].distance.toFixed(2) + " miles" + "&nbsp&nbsp&nbsp&nbsp  Occupancy: N/A </div>" +
+		"<div class = 'center'> Distance: " + dist[i].distance.toFixed(2) + " miles" + "&nbsp&nbsp&nbsp&nbsp  Occupancy: " + occupancy[i].occupancy + "</div>" +
 		"<br/>" +
 		"<br/>" +
 		"</div>";

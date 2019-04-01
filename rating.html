@@ -156,7 +156,7 @@
       {
           poly = L.polygon(lots[i].polygon).addTo(mymap);
           lotsOnMap.push({label: lots[i].label, polygon: poly, averageRating: lots[i].averageRating});
-          poly.setStyle({fillOpacity: 0.75, color: "black", fillColor: numberToColorScale(lots[i].averageRating)});
+          poly.setStyle({fillOpacity: 0.75, color: "black", fillColor: numberToColorScale(parseFloat(lots[i].averageRating))});
           poly.on('click', function() {
             var obj = lotsOnMap.find(o => o.polygon === this);
               mapPress(obj.label);

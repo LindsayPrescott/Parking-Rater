@@ -26,52 +26,69 @@ class howLongAgo {
 	}
 }
 
-function averageRating(lot) //naive average
+/* function averageRating(lot) //naive average out of use now
 {
-	var average;
-	var total=0;
 	db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot) => {
+			var average = 0.0;
+			var total = 0;
 			let i = snapshot.size - 1;
-			let maxRatings = 100;//maximum amount of ratings to show in the log
+			maxRatings = 100;//maximum amount of ratings to show in the log
 			while (i >= 0 && maxRatings > 0)
 			{
 				let doc = snapshot.docs[i];
 				let data = doc.data();
-				let timeDif = howLongAgoHours(data.time.toDate());
-				if (timeDif<1)
+				let timeDif = new howLongAgo(data.time.toDate());
+				let timeDifHours = timeDif.howLongAgoHours();
+				if (timeDifHours<1)
 				{
-					average += data.score;
+					average += parseFloat(data.score);
 					total++;
 				};
 				i--;
 				maxRatings--;
 			};
+			average = average/total;
+			var obj = lots.find(o => o.label == lot);
+			obj.averageRating = average;
 		});
-	average = average/total;
-	return average;
-}
+} */
 
+
+//Exponential moving average with alpha at .3
 function getWeightedAverage(lot) {
-	db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot)=> {
+	db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot) => {
+			var average = 0.0;
 			let i = snapshot.size - 1;
-			let maxRatings = 100;//maximum amount of ratings to show in the log
-			ExponentialMovingAverage(.3, snapshot.docs[0].data());
-			while (i >= 1 && maxRatings > 0)
+			maxRatings = 100;//maximum amount of ratings to show in the log
+			while (i >= 0 && maxRatings > 0)
 			{
-				let data = snapshot.docs[i].data();
-				let timeDif = howLongAgo(data.time.toDate());
-				let timeDif = howLongAgoHours();
-				let rating = data.score;
-				if(timeDif<1)
+				let doc = snapshot.docs[i];
+				let data = doc.data();
+				let rating = parseFloat(data.score);
+				if(average == 0) 
 				{
-					update(rating);
+					average = rating;
 				}
+				else 
+				{
+					let timeDif = new howLongAgo(data.time.toDate());
+					let timeDifHours = timeDif.howLongAgoHours();
+					if (timeDifHours<1)
+					{
+						let meanIncrement = .3 * (rating - average);
+						let newAverage = average + meanIncrement;
+						average = newAverage;
+					}
+				}
+				i--;
+				maxRatings--;
 			}
-	}
-	return getMean();
+			var obj = lots.find(o => o.label == lot);
+			obj.averageRating = average;
+		});
 }
 
-class ExponentialMovingAverage //weighted average found on https://dev.to/nestedsoftware/exponential-moving-average-on-streaming-data-4hhl
+/* class ExponentialMovingAverage //weighted average found on https://dev.to/nestedsoftware/exponential-moving-average-on-streaming-data-4hhl
 {
     constructor(alpha, initialMean) //constructor
 	{
@@ -90,4 +107,4 @@ class ExponentialMovingAverage //weighted average found on https://dev.to/nested
 	getMean() {
 		return this.mean;
 	}
-}
+} */

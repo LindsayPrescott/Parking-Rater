@@ -58,19 +58,23 @@ class howLongAgo {
 function getWeightedAverage(lot) {
 	db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot) => {
 			var average = 0.0;
-			let i = snapshot.size - 1;
-			maxRatings = 100;//maximum amount of ratings to show in the log
-			while (i >= 0 && maxRatings > 0)
+			if(snapshot.size >= 100)
+			{
+				var i = snapshot.size-100;
+			}
+			else
+			{
+				var i=0;
+			}
+			while(i<snapshot.size)
 			{
 				let doc = snapshot.docs[i];
 				let data = doc.data();
 				let rating = parseFloat(data.score);
-				if(average == 0) 
-				{
+				if(average == 0) {
 					average = rating;
 				}
-				else 
-				{
+				else {
 					let timeDif = new howLongAgo(data.time.toDate());
 					let timeDifHours = timeDif.howLongAgoHours();
 					if (timeDifHours<1)
@@ -80,8 +84,7 @@ function getWeightedAverage(lot) {
 						average = newAverage;
 					}
 				}
-				i--;
-				maxRatings--;
+				i++;
 			}
 			var obj = lots.find(o => o.label == lot);
 			obj.averageRating = average;

@@ -237,3 +237,8 @@ function loadLots()
 		lotsOnMap[i].polygon.setStyle({fillOpacity: 0.75, color: "black", fillColor: numberToColorScale(parseFloat(lots[i].averageRating))});
 	setTimeout(loadLots, 3000);
 }
+
+function doneLoading()
+{
+	document.getElementById('loading').style.display = "none";
+}

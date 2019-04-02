@@ -56,8 +56,8 @@
 	height: 80vh;
 	width: 60vw;
 	position: fixed;
-	left: 20vw;
-	top: 12vh;
+	left: 25vw;
+	top: 15vh;
 	z-index: -1;
 	}
 .big-center {
@@ -78,20 +78,36 @@
 
 
 </style>
+<link rel="stylesheet" href="style.css">
 
 <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-firestore.js"></script>
 <script src="firebaseinit.js"></script>
 <script src="suggestions.js"></script>
 
+<body>
+	<header class="navigation">
+		<div class="container">
+			<h1 class="logo">Tiger Parking</h1>
+			<nav>
+				<ul>
+					<li><a class="navigation-tags" href="main.html">Home</a></li>
+					<li><a class="navigation-tags" href="about.html">About</a></li>
+					<li><a class="navigation-tags" href="Rating.html">Rate</a></li>
+					<li><a class="navigation-tags" href="Suggestions.html">Suggestions</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+</body>
 <!-- Autocomplete -->
-<h2 class="demoHeaders">Enter a location</h2>
-<div>
+<h2 class="demoHeaders" style = "position: relative; left: 1vw;">Enter a location</h2>
+<div style = "position: relative; left: 1vw;">
 	<input id="autocomplete" title="type &quot;a&quot;"></input>
 	<button id="select-location" onclick="selectLocation()">Select Location</button>
 </div>
 <br>
-<div>
+<div style = "position: relative; left: 1vw;">
 	<p>Is your location not in our database? <br>
 	You can contribue by adding it.
 	<br/> <button id="add-location" onclick="openAddLocationMenu()">Add Location</button>
@@ -300,11 +316,12 @@ function openLotSidebar(location) {
 	var scrollbar = document.getElementById('lot-scrollbar');
 	for (var i = 0; i < dist.length; i++)
 	{
+		var currentOccupancy = occupancy.find(o => o.label == dist[i].label);
 		var html = "<div title = '" + dist[i].label + "' id = 'lot-window-lot' onmouseenter='lotMouseOver(this)' onmouseleave='lotMouseLeave(this)' onmouseup='lotMouseUp(this)' onmousedown='lotMouseDown(this)'>" +
 		"<br/>" +
 		"<div class = 'big-center'>" + dist[i].label + "</div>" +
 		"<br/>" +
-		"<div class = 'center'> Distance: " + dist[i].distance.toFixed(2) + " miles" + "&nbsp&nbsp&nbsp&nbsp  Occupancy: " + occupancy[i].occupancy + "</div>" +
+		"<div class = 'center'> Distance: " + dist[i].distance.toFixed(2) + " miles" + "&nbsp&nbsp&nbsp&nbsp  Occupancy: " + currentOccupancy.occupancy + "</div>" +
 		"<br/>" +
 		"<br/>" +
 		"</div>";

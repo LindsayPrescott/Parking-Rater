@@ -57,6 +57,16 @@
 		top: 15vh;
 		text-align: center;
 		}
+  #loading
+  {
+    font-size: 200%;
+    left: 21vw;
+    top: 90vh;
+    position: fixed;
+    text-align: center;
+    color: "black";
+    display: "block";
+  }
   #mapid {
     	height: 80vh;
     	width: 60vw;
@@ -86,7 +96,6 @@
   </style>
 
   <body>
-  <h1 id="bigOne"></h1>
 	<script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-firestore.js"></script>
 	<script src="firebaseinit.js"></script>
@@ -99,18 +108,20 @@
 
 
 	<script src="rating.js"></script>
-
-	<header>
-		<div class="container">
-			<!-- may replace with actual logo-->
-			<h1 class="logo">Tiger Parking</h1>
-			<nav>
-				<ul>
-				<li><a class="navigation-tags" href="main.html">Log Out</a></li>
-				</ul>
-			</nav>
-		</div>
-	</header>
+  <header>
+    <div class="container">
+      <!-- may replace with actual logo-->
+      <h1 class="logo">Tiger Parking</h1>
+      <nav>
+        <ul>
+          <li><a class="navigation-tags" href="main.html">Home</a></li>
+          <li><a class="navigation-tags" href="about.html">About</a></li>
+          <li><a class="navigation-tags" href="Rating.html">Rate</a></li>
+          <li><a class="navigation-tags" href="Suggestions.html">Suggestions</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 	<div id="overlay">
 	<!-- Empty overlay -->
 	</div>
@@ -140,6 +151,7 @@
 		<button id='close-window' onclick='closeWindow()'>Close</button>
 	</div>
   <div id="mapid"></div>
+  <div id="loading">Loading...</div>
   <script src="lotsarray.js"></script>
   <script>
       var mymap = L.map('mapid').setView([30.410447, -91.179332], 16);
@@ -164,6 +176,7 @@
       }
 
       setTimeout(loadLots,1000);
+      setTimeout(doneLoading,1000);
 
   </script>
 

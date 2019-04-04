@@ -9,6 +9,7 @@
 		<script src="https://www.gstatic.com/firebasejs/5.8.0/firebase-auth.js"></script>
 		<link rel="stylesheet" href="style.css">
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script src="scripts.js"></script>
 	</head>
 	<body id="main-body">
 		<header>
@@ -31,14 +32,14 @@
 					<input id="username" placeholder="Username" type="test"/>
 					<input id="signupEmail" placeholder="Email" type="text" />
 					<input id="signupPassword" placeholder="Password" type="password" />
-					<input id="signupPasswordRepeat" placeholder="Confirm Password" type="text" />
-					<button type-"button" onclick="location.href='rating.html'">Sign Up</button>
+					<input id="signupPasswordRepeat" placeholder="Confirm Password" type="password" />
+					<button type="button" onclick="signUp()">Sign Up</button>
 					<p class="message">Already Registered? <a href="#">Log in</a></p>
 				</form>
 				<form class="login-form">
-					<input type="text" placeholder="user name"/>
-					<input type="password" placeholder="password"/>
-					<button type-"button" onclick="location.href='rating.html'">Log In</button>
+					<input id = "username-for-login" type="text" placeholder="user name"/>
+					<input id = "password-for-login" type="password" placeholder="password"/>
+					<button type = "button" onclick="logIn()">Log In</button>
 					<p class="message">Not Registered? <a href="#">Regsiter</a></p>
 				</form>
 			</div>

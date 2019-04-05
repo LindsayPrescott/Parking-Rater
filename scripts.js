@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-expressions */
 //import adminmin for firebase
+/*
 var admin = require('firebase-admin');
 (function() {
     // Initialize Firebase
     // deleted firebase auth as its done somewhere else
- 
-    
+
+
     const auth = admin.auth();
 	const db = admin.firestore();
 
@@ -34,9 +35,9 @@ var admin = require('firebase-admin');
         const promise = auth.createUserWithEmailAndPassword(email, pass);
         promise.catch(e => console.log(e.message));
     })
-    
+
     //realtime listener
-    admin.auth().onAuthStateChanged(firebaseUser => { 
+    admin.auth().onAuthStateChanged(firebaseUser => {
         if(firebaseUser){
             console.log(firebaseUser);
         } else {
@@ -44,3 +45,27 @@ var admin = require('firebase-admin');
         }
     });
 });
+
+*/
+
+function logIn() {
+  var username = document.getElementById('username-for-login');
+  var password = document.getElementById('password-for-login');
+  if (username.value == "" || password.value == "")
+    alert('Type in values for both username and password');
+  else
+    location.href = "rating.html";
+  }
+
+  function signUp() {
+    var username = document.getElementById('username');
+    var password = document.getElementById('signupPassword');
+    var email = document.getElementById('signupEmail');
+    var passwordRepeat = document.getElementById('signupPasswordRepeat');
+    if (username.value == "" || password.value == "" || email.value == "" || passwordRepeat.value == null)
+      alert('Type in values for all fields');
+    else if (password.value != passwordRepeat.value)
+      alert('Passwords must match');
+    else
+      location.href = "rating.html";
+    }

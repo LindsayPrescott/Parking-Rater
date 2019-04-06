@@ -278,7 +278,7 @@ function openLotSidebar(location) {
 			label: lots[i].label,
 			distance: d
 			});
-		getWeightedAverage(lots[i].label)
+		setWeightedAverage(lots[i].label)
 		if (parseFloat(lots[i].averageRating)<=1.1)
 		{
 			occupancy.push({

@@ -1,4 +1,6 @@
-class howLongAgo {
+//Turns out this file is an unnecessary file due to the code belonging to other files.
+
+/* class howLongAgo {
 	constructor(time)
 	{
 		this.diff = new Date().getTime() - time.getTime();
@@ -24,40 +26,14 @@ class howLongAgo {
 		let seconds = Math.round(this.diff%216000000);
 		return hours.toString() + " hours, " + minutes.toString() + " minutes, " + seconds.toString() + " seconds ago";
 	}
-}
-
-/* function averageRating(lot) //naive average out of use now
-{
-	db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot) => {
-			var average = 0.0;
-			var total = 0;
-			let i = snapshot.size - 1;
-			maxRatings = 100;//maximum amount of ratings to show in the log
-			while (i >= 0 && maxRatings > 0)
-			{
-				let doc = snapshot.docs[i];
-				let data = doc.data();
-				let timeDif = new howLongAgo(data.time.toDate());
-				let timeDifHours = timeDif.howLongAgoHours();
-				if (timeDifHours<1)
-				{
-					average += parseFloat(data.score);
-					total++;
-				};
-				i--;
-				maxRatings--;
-			};
-			average = average/total;
-			var obj = lots.find(o => o.label == lot);
-			obj.averageRating = average;
-		});
 } */
 
 
-//Exponential moving average with alpha at .3
-function getWeightedAverage(lot) {
+
+//Exponential moving average with alpha at .3 Copy from lotsarray.js... uneeded copy.
+/* function setWeightedAverage(lot) {
 	db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot) => {
-			var average = 0.0;
+			var average = Math.NaN;
 			if(snapshot.size >= 100)
 			{
 				var i = snapshot.size-100;
@@ -71,13 +47,15 @@ function getWeightedAverage(lot) {
 				let doc = snapshot.docs[i];
 				let data = doc.data();
 				let rating = parseFloat(data.score);
-				if(average == 0) {
-					average = rating;
-				}
-				else {
-					let timeDif = new howLongAgo(data.time.toDate());
-					let timeDifHours = timeDif.howLongAgoHours();
-					if (timeDifHours<1)
+				let timeDif = new howLongAgo(data.time.toDate());
+				let timeDifHours = timeDif.howLongAgoHours();
+				if (timeDifHours<1)
+				{
+					if(average == Math.NaN) 
+					{
+						average = rating;
+					}
+					else
 					{
 						let meanIncrement = .3 * (rating - average);
 						let newAverage = average + meanIncrement;
@@ -89,7 +67,8 @@ function getWeightedAverage(lot) {
 			var obj = lots.find(o => o.label == lot);
 			obj.averageRating = average;
 		});
-}
+		console.log("suggestions");
+} */
 
 /* class ExponentialMovingAverage //weighted average found on https://dev.to/nestedsoftware/exponential-moving-average-on-streaming-data-4hhl
 {

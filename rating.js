@@ -95,7 +95,7 @@ function getRecentRatings(lot)
 			averageText.innerHTML = "Average Rating for the past hour: " + obj.averageRating.toFixed(2);
 		}
 	}
-function averageRating(lot) //naive average
+/* function averageRating(lot) //naive average - unused now.
 {
 	db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot) => {
 			var average = 0.0;
@@ -120,10 +120,12 @@ function averageRating(lot) //naive average
 			var obj = lots.find(o => o.label == lot);
 			obj.averageRating = average;
 		});
-}
-function getWeightedAverage(lot) {
+} */
+/* 	Copy from lotsarray, uneeded duplicated code.
+
+	function setWeightedAverage(lot) {
 	db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot) => {
-			var average = 0.0;
+			var average = Math.NaN;
 			if(snapshot.size >= 100)
 			{
 				var i = snapshot.size-100;
@@ -137,13 +139,15 @@ function getWeightedAverage(lot) {
 				let doc = snapshot.docs[i];
 				let data = doc.data();
 				let rating = parseFloat(data.score);
-				if(average == 0) {
-					average = rating;
-				}
-				else {
-					let timeDif = new howLongAgo(data.time.toDate());
-					let timeDifHours = timeDif.howLongAgoHours();
-					if (timeDifHours<1)
+				let timeDif = new howLongAgo(data.time.toDate());
+				let timeDifHours = timeDif.howLongAgoHours();
+				if (timeDifHours<1)
+				{
+					if(average == Math.NaN) 
+					{
+						average = rating;
+					}
+					else
 					{
 						let meanIncrement = .3 * (rating - average);
 						let newAverage = average + meanIncrement;
@@ -155,9 +159,10 @@ function getWeightedAverage(lot) {
 			var obj = lots.find(o => o.label == lot);
 			obj.averageRating = average;
 		});
-}
+		console.log("ratings");
+} */
 
-/* class ExponentialMovingAverage //weighted average found on https://dev.to/nestedsoftware/exponential-moving-average-on-streaming-data-4hhl
+/* class ExponentialMovingAverage //weighted average found on https://dev.to/nestedsoftware/exponential-moving-average-on-streaming-data-4hhl which I used to create weighted average.
 {
     constructor(alpha, initialMean) //constructor
 	{
@@ -232,7 +237,7 @@ function submitRating()
 			time: new Date(),
 			user_id: "not defined yet"
 			});
-	getWeightedAverage(lotWindow.getLot());
+	setWeightedAverage(lotWindow.getLot());
 	pullUpThankYouWindow();
 }
 

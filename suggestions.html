@@ -143,7 +143,27 @@
 var mymap = L.map('mapid').setView([30.410447, -91.179332], 16);
 
 		function onMapClick(e) {
-		 alert("You clicked the map at " + e.latlng);
+			closeLotSidebar();
+		 	var _latitude = e.latlng.lat;
+		 	var _longitude = e.latlng.lng;
+			var customLocation = {
+				label: _latitude + ", " + _longitude,
+				latitude: _latitude,
+				longitude: _longitude
+			};
+		 	if (currentLocationMarker == null)
+		 	{
+		 		currentLocationMarker = L.marker([_latitude, _longitude]).addTo(mymap)
+		 			.bindPopup(customLocation.label)
+		 			.openPopup();
+		 	}
+		 	else
+		 	{
+		 		currentLocationMarker.setLatLng([_latitude, _longitude])
+		 			.bindPopup(customLocation.label)
+		 			.openPopup();
+		 	}
+		 	openLotSidebar(customLocation);
 		}
 		mymap.on('click', onMapClick);
 

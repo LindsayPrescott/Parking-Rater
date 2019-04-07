@@ -11,6 +11,4 @@
 
 	const db = firebase.firestore(); 
 
-	// we prolly dont need this code unless someone else put it here recently . 
-	//If it was mine, then my statement stands and this can be safely ignored
-	//--jake
+	

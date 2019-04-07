@@ -3,7 +3,7 @@
 var admin = require('firebase-admin');
 (function() {
     // Initialize Firebase
-    // deleted firebase auth as its done somewhere else 
+    // 
  
     
     const auth = admin.auth();

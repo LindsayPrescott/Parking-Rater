@@ -1,18 +1,16 @@
-Now, every component that is interested in using Firebase has access to the Firebase instance with
- a FirebaseContext.Consumer component.
+SDK imports and implicit initialization
+Web apps hosted with Firebase Hosting can benefit from simpler project configuration. Paste the following code snippets into your application HTML to import the Firebase SDK and configure it automatically for the project your app is hosted on:
 
-example:
+    <!-- Firebase App is always required and must be first -->
+    <script src="/__/firebase/5.9.3/firebase-app.js"></script>
 
-import React from 'react';
+    <!-- Add additional services that you want to use -->
+    <script src="/__/firebase/5.9.3/firebase-auth.js"></script>
+    <script src="/__/firebase/5.9.3/firebase-database.js"></script>
+    <script src="/__/firebase/5.9.3/firebase-messaging.js"></script>
+    <script src="/__/firebase/5.9.3/firebase-functions.js"></script>
 
-import  { FirebaseContext } from '../Firebase';
+    <!-- Comment out (or don't include) services that you don't want to use -->
+    <!-- <script src="/__/firebase/5.9.3/firebase-storage.js"></script> -->
 
-const SomeComponent = () => (
-  <FirebaseContext.Consumer>
-    {firebase => {
-      return <div>I've access to Firebase and render something.</div>;
-    }}
-  </FirebaseContext.Consumer>
-);
-
-export default SomeComponent;
+    <script src="/__/firebase/init.js"></script>

@@ -1,6 +1,6 @@
 //Turns out this file is an unnecessary file due to the code belonging to other files.
 
-/* class howLongAgo {
+class howLongAgo {
 	constructor(time)
 	{
 		this.diff = new Date().getTime() - time.getTime();
@@ -26,7 +26,7 @@
 		let seconds = Math.round(this.diff%216000000);
 		return hours.toString() + " hours, " + minutes.toString() + " minutes, " + seconds.toString() + " seconds ago";
 	}
-} */
+}
 
 
 

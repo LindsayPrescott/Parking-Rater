@@ -46,7 +46,7 @@ function numberToColorScale(num)
 				 num > 2.2   ? '#ffda9f' :
 				 num > 1.7   ? '#ffe6be' :
 				 num > 1.2   ? '#fff0d2' :
-				 num > 1.0 ?	'#ffffe6' :
+				 num >= 1.0 ?	'#ffffe6' :
 				 '#C0C0C0';
 }
 

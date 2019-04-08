@@ -18,7 +18,7 @@ function setWeightedAverage(lot) {
 				let timeDifHours = timeDif.howLongAgoHours();
 				if (timeDifHours<1)
 				{
-					if(average == Math.NaN) 
+					if(average == Math.NaN)
 					{
 						average = rating;
 					}
@@ -46,7 +46,8 @@ function numberToColorScale(num)
 				 num > 2.2   ? '#ffda9f' :
 				 num > 1.7   ? '#ffe6be' :
 				 num > 1.2   ? '#fff0d2' :
-										'#ffffe6';
+				 num > 1.0 ?	'#ffffe6' :
+				 '#C0C0C0';
 }
 
 var lots = [

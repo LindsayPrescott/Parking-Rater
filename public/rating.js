@@ -73,14 +73,18 @@ function getRecentRatings(lot)
 		ratingsText.innerHTML = "Recent ratings: <br><br>";
 		db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot) => {
 			let i = snapshot.size - 1;
-			maxRatings = 100;//maximum amount of ratings to show in the log
+			maxRatings = 10;//maximum amount of ratings to show in the log
 			while (i >= 0 && maxRatings > 0)
 			{
 				let doc = snapshot.docs[i];
 				let data = doc.data();
 				ratingsText.innerHTML += "Score: " + data.score;
-				let timeDif = howLongAgoString(data.time.toDate());
-				ratingsText.innerHTML += " - " + timeDif + "<br>";
+				let timeDif = howLongAgo(data.time.toDate());
+				if (timeDif.howLongAgouHours() <= 1)
+					{
+						timeDif = howLongAgoString(data.time.toDate());
+						ratingsText.innerHTML += " - " + timeDif + "<br>";
+					}
 				i--;
 				maxRatings--;
 				};
@@ -143,7 +147,7 @@ function getRecentRatings(lot)
 				let timeDifHours = timeDif.howLongAgoHours();
 				if (timeDifHours<1)
 				{
-					if(average == Math.NaN) 
+					if(average == Math.NaN)
 					{
 						average = rating;
 					}

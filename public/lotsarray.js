@@ -1,9 +1,9 @@
 function setWeightedAverage(lot) {
 	db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot) => {
 			var average = Math.NaN;
-			if(snapshot.size >= 100)
+			if(snapshot.size >= 10)
 			{
-				var i = snapshot.size-100;
+				var i = snapshot.size-10;
 			}
 			else
 			{

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+	<meta charset="utf-8">
+	<title>Tiger Parking</title>
+	<link rel="stylesheet" href="style.css">
+  </head>
+
+  <style type="text/css">
+	div#overlay{
+		display: none;
+		z-index: 2;
+		background: #000;
+		position: fixed;
+		width: 100vw;
+		height: 100vh;
+		top: 0vh;
+		left: 0vw;
+		text-align: center;
+		}
+
+	div#lot-window{
+		display: none;
+		position: fixed;
+		z-index: 3;
+		width: 70vw;
+		height: 70vh;
+		background: #FFF;
+		color: #000;
+		left: 15vw;
+		top: 15vh;
+		text-align: center;
+		}
+
+	div#rating-window{
+		display: none;
+		position: fixed;
+		z-index: 3;
+		width: 70vw;
+		height: 70vh;
+		background: #FFF;
+		color: #000;
+		left: 15vw;
+		top: 15vh;
+		text-align: center;
+		}
+	div#thank-you-window{
+		display: none;
+		position: fixed;
+		z-index: 3;
+		width: 70vw;
+		height: 70vh;
+		background: #FFF;
+		color: #000;
+		left: 15vw;
+		top: 15vh;
+		text-align: center;
+		}
+  #loading
+  {
+    font-size: 200%;
+    left: 21vw;
+    top: 90vh;
+    position: fixed;
+    text-align: center;
+    color: "black";
+    display: "block";
+  }
+  #mapid {
+    	height: 80vh;
+    	width: 60vw;
+    	position: fixed;
+    	left: 20vw;
+    	top: 17vh;
+    	z-index: -1;
+    	}
+	p#lot-window-recent-ratings{
+	text-align: left;
+	margin-left: 5vw;
+	width: 90vw;
+  height: 40vh;
+	}
+	button#lot-window-add-rating{
+	position: fixed;
+	text-align: center;
+	top: 80vh;
+	left: 46vw;
+	}
+	button#lot-window-close{
+	position: fixed;
+	text-align: center;
+	top: 80vh;
+	left: 51vw;
+	}
+  </style>
+
+  <body>
+	<script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-firestore.js"></script>
+	<script src="firebaseinit.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+	   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+	   crossorigin=""/>
+	<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+	   integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+	   crossorigin=""></script>
+
+
+	<script src="rating.js"></script>
+  <header>
+    <div class="container">
+      <!-- may replace with actual logo-->
+      <h1 class="logo">Tiger Parking</h1>
+      <nav>
+        <ul>
+          <li><a class="navigation-tags" href="main.html">Home</a></li>
+          <li><a class="navigation-tags" href="about.html">About</a></li>
+          <li><a class="navigation-tags" href="rating.html">Rate</a></li>
+          <li><a class="navigation-tags" href="suggestions.html">Suggestions</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+	<div id="overlay">
+	<!-- Empty overlay -->
+	</div>
+	<div id="lot-window">
+		<h3 id="lot-window-header">Parking Lot</h3>
+    <br/>
+		<p id='average'>Average rating will go here</p>
+		<p id='lot-window-recent-ratings' style="overflow-y: scroll;">
+		Empty Text
+		</p>
+		<button id="lot-window-add-rating" onclick="pullUpRatingWindow()">Add Rating</button>
+		<button id='lot-window-close' onclick = "closeWindow()">Close</button>
+	</div>
+	<div id="rating-window">
+		<h3>Rate how full the lot is</h3>
+		<input type="radio" name = "ratingScore" value="1" checked> 1-Mostly to completely empty.<br>
+		<input type="radio" name = "ratingScore" value="2" checked> 2-Less than half full, but more than empty.<br>
+		<input type="radio" name = "ratingScore" value="3" checked> 3-Half full, or half empty depending on your point of view.<br>
+		<input type="radio" name = "ratingScore" value="4" checked> 4-More than half full, but not completely full.<br>
+		<input type="radio" name = "ratingScore" value="5" checked> 5-I took the last empty spot. HA!<br>
+		<br>
+		<button onclick = 'submitRating()'>Submit Rating</button>
+		<button id="close-window" onclick="closeWindow()">Close</button>
+	</div>
+	<div id="thank-you-window">
+		<h3>Thank you for rating!</h3>
+		<button id='close-window' onclick='closeWindow()'>Close</button>
+	</div>
+  <div id="mapid"></div>
+  <div id="loading">Loading...</div>
+  <script src="lotsarray.js"></script>
+  <script>
+      var mymap = L.map('mapid').setView([30.410447, -91.179332], 16);
+
+      		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+      			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      			maxZoom: 18,
+      			id: 'mapbox.streets',
+      			accessToken: 'pk.eyJ1IjoiZGF0a2kxMSIsImEiOiJjanRnbWN6bGcwN2VpNDNxc2c1NXBpZjc5In0.AwfsXeahKCgjTeXM77P1zQ'
+      		}).addTo(mymap);
+      var lotsOnMap = [];
+      var poly;
+      for(var i = 0; i < lots.length; i++)
+      {
+          poly = L.polygon(lots[i].polygon).addTo(mymap);
+          lotsOnMap.push({label: lots[i].label, polygon: poly, averageRating: lots[i].averageRating});
+          poly.setStyle({fillOpacity: 0.75, color: "black", fillColor: numberToColorScale(parseFloat(lots[i].averageRating))});
+          poly.on('click', function() {
+            var obj = lotsOnMap.find(o => o.polygon === this);
+              mapPress(obj.label);
+          });
+      }
+
+      setTimeout(loadLots,1000);
+      setTimeout(doneLoading,1000);
+
+  </script>
+
+</html>

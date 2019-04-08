@@ -243,13 +243,13 @@ function submitRating()
 			});
 	setWeightedAverage(lotWindow.getLot());
 	pullUpThankYouWindow();
+	loadLots();
 }
 
 function loadLots()
 {
 	for (var i = 0; i < lotsOnMap.length; i++)
 		lotsOnMap[i].polygon.setStyle({fillOpacity: 0.75, color: "black", fillColor: numberToColorScale(parseFloat(lots[i].averageRating))});
-	setTimeout(loadLots, 3000);
 }
 
 function doneLoading()

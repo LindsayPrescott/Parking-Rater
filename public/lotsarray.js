@@ -1,15 +1,10 @@
 function setWeightedAverage(lot) {
 	db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot) => {
 			var average = Math.NaN;
-			if(snapshot.size >= 10)
-			{
-				var i = snapshot.size-10;
-			}
-			else
-			{
-				var i=0;
-			}
-			while(i<snapshot.size)
+			var i = snapshot.size - 1;
+			var bound = Math.max(snapshot.size - 11, 0);
+
+			while(i > bound)
 			{
 				let doc = snapshot.docs[i];
 				let data = doc.data();
@@ -18,6 +13,7 @@ function setWeightedAverage(lot) {
 				let timeDifHours = timeDif.howLongAgoHours();
 				if (timeDifHours<1)
 				{
+									console.log(lot + ": " + "Rating: " + rating.toString());
 					if(average == Math.NaN)
 					{
 						average = rating;
@@ -29,7 +25,7 @@ function setWeightedAverage(lot) {
 						average = newAverage;
 					}
 				}
-				i++;
+				i--;
 			}
 			var obj = lots.find(o => o.label == lot);
 			obj.averageRating = average;

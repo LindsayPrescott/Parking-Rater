@@ -64,7 +64,10 @@ function howLongAgoString(time)
 	let minutes = Math.round(difInSeconds / 60);
 	difInSeconds = difInSeconds % 60;
 	let seconds = Math.round(difInSeconds);
-	return hours.toString() + " hours, " + minutes.toString() + " minutes, " + seconds.toString() + " seconds ago";
+	hours = (hours == 0) ? "" : hours.toStribg() + " hours, ";
+	minutes = (minutes == 0) ? "" : minutes.toString() + " minutes, ";
+	seconds = seconds.toString() + " seconds ago";
+	return hours + minutes + seconds
 }
 
 function getRecentRatings(lot)
@@ -78,10 +81,10 @@ function getRecentRatings(lot)
 			{
 				let doc = snapshot.docs[i];
 				let data = doc.data();
-				ratingsText.innerHTML += "Score: " + data.score;
-				let timeDif = howLongAgo(data.time.toDate());
-				if (timeDif.howLongAgouHours() <= 1)
+				let timeDif = new howLongAgo(data.time.toDate());
+				if (timeDif.howLongAgoHours() <= 1)
 					{
+						ratingsText.innerHTML += "Score: " + data.score;
 						timeDif = howLongAgoString(data.time.toDate());
 						ratingsText.innerHTML += " - " + timeDif + "<br>";
 					}
@@ -96,7 +99,7 @@ function getRecentRatings(lot)
 			averageText.innerHTML = "No recent ratings."
 		}
 		else{
-			averageText.innerHTML = "Average Rating for the past hour: " + obj.averageRating.toFixed(2);
+			averageText.innerHTML = "Current estimated occupancy: " + (obj.averageRating * 20).toFixed(1) + "%";
 		}
 	}
 /* function averageRating(lot) //naive average - unused now.
@@ -243,7 +246,7 @@ function submitRating()
 			});
 	setWeightedAverage(lotWindow.getLot());
 	pullUpThankYouWindow();
-	loadLots();
+	setTimeout(loadLots,500);
 }
 
 function loadLots()

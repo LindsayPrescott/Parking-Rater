@@ -151,7 +151,6 @@ div#overlay{
   color: #FCCF22;
   background-color: #3B1869;
   padding: 10px;
-  font-family: 'Montserrat', sans-serif;
 }
 
 /* Add a hover effect for buttons */
@@ -163,7 +162,6 @@ button:hover {
 .h2 {
   padding: 10px 8px;
   text-align: center;
-  font-family: 'Montserrat', sans-serif;
 }
 
 /* Add padding to containers */
@@ -185,8 +183,9 @@ button:hover {
 /* If changed be sure to test. Multiple parts form the style*/
 body {
   margin: 0;
-  background: #fff;
-  font-family: 'Montserrat', sans-serif;
+  background: #e6e8ed;
+  
+  font-family: 'Montserrat', sans-serif; 
   font-weight: 100;
 }
 
@@ -197,6 +196,8 @@ body {
 
 header {
   background: #3B1869;
+  font-weight: bold;
+  font-family: Georgia, serif;
 }
 
 header::after {
@@ -207,15 +208,15 @@ header::after {
 
 .logo {
   float: left;
-  padding: 10px 0;
+  padding: 5px 0;
   color: #FCCF22;
   text-align: center;
   width: auto;
   padding: 0.6rem;
-  font-size: 1.1rem;
+  font-size: 2rem;
   line-height: 1;
   align-items: center;
-  font-weight: lighter;
+  font-weight: bold;
 }
 
 nav {
@@ -237,15 +238,16 @@ nav li {
 
 nav a {
   color: #FCCF22;
-  text-align: center;
+  clear: both;
+  text-align: left;
   width: auto;
   padding: 0.6rem;
   font-size: 1.1rem;
-  line-height: 1;
-  display: inline-flex;
+  line-height: 4;
+  display: table-cell;
   text-decoration: none;
-  align-items: center;
-  font-weight: lighter;
+  align-items: left;
+  font-weight: 600;
 }
 
 nav a:hover {

@@ -82,7 +82,7 @@ function getRecentRatings(lot)
 				let doc = snapshot.docs[i];
 				let data = doc.data();
 				let timeDif = new howLongAgo(data.time.toDate());
-				if (timeDif.howLongAgoHours() < 1)
+				if (timeDif.howLongAgoHours() <= 1)
 					{
 						ratingsText.innerHTML += "Score: " + data.score;
 						timeDif = howLongAgoString(data.time.toDate());

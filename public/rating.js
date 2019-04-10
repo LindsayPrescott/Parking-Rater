@@ -194,9 +194,6 @@ function getRecentRatings(lot)
 function mapPress(lot)
 {
 	lotWindow = new LotWindow(lot);
-
-
-	lotWindow.overlay.style.opacity = .5;
 	lotWindow.overlay.style.display = "block";
 
 	lotWindow.lotInfoWindow.style.display = "block";
@@ -208,7 +205,6 @@ function mapPress(lot)
 
 function pullUpRatingWindow()
 {
-	lotWindow.overlay.style.opacity = .5;
 	lotWindow.overlay.style.display = "block";
 
 	lotWindow.lotInfoWindow.style.display = "none";
@@ -229,6 +225,12 @@ function closeWindow()
 	lotWindow.header.style.display = "none";
 	lotWindow.thankYouWindow.style.display = "none";
 	lotWindow = null;
+	document.getElementById('closing-window').style.display = "block";
+	setTimeout(endWindowClosingAnimation, 190);
+}
+function endWindowClosingAnimation()
+{
+	document.getElementById('closing-window').style.display = "none";
 }
 function submitRating()
 {
@@ -248,7 +250,7 @@ function submitRating()
 			});
 	setWeightedAverage(lotWindow.getLot());
 	pullUpThankYouWindow();
-	setTimeout(loadLots,500);
+	setTimeout(loadLots,1500);
 }
 
 function loadLots()

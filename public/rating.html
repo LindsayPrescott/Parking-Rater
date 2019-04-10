@@ -73,21 +73,28 @@
   </div>
 	<div id="rating-window">
 		<h3>Rate how full the lot is</h3>
+    <br><br><br>
 		<input type="radio" name = "ratingScore" value="1" checked> 1-Mostly to completely empty.<br>
-		<input type="radio" name = "ratingScore" value="2" checked> 2-Less than half full, but more than empty.<br>
-		<input type="radio" name = "ratingScore" value="3" checked> 3-Half full, or half empty depending on your point of view.<br>
-		<input type="radio" name = "ratingScore" value="4" checked> 4-More than half full, but not completely full.<br>
-		<input type="radio" name = "ratingScore" value="5" checked> 5-I took the last empty spot. HA!<br>
-		<br>
+    <br>
+    <input type="radio" name = "ratingScore" value="2" checked> 2-Less than half full, but more than empty.<br>
+    <br>
+    <input type="radio" name = "ratingScore" value="3" checked> 3-Half full, or half empty depending on your point of view.<br>
+    <br>
+    <input type="radio" name = "ratingScore" value="4" checked> 4-More than half full, but not completely full.<br>
+    <br>
+    <input type="radio" name = "ratingScore" value="5" checked> 5-I took the last empty spot. HA!<br>
+		<br><br><br><br><br><br>
     <div style = "text-align: center">
   		<button class = "window-button" onclick = 'submitRating()'>Submit Rating</button>
   		<button class = "window-button" id="close-window" onclick="closeWindow()">Close</button>
     </div>
 	</div>
 	<div id="thank-you-window">
-		<h3>Thank you for rating!</h3>
+		<h3><br><br><br><br><br><br><br>Thank you for rating!<br><br></h3>
 		<button class = "window-button" id='close-window' onclick='closeWindow()'>Close</button>
 	</div>
+  <div id='closing-window'>
+  </div>
   <div id="mapid"></div>
   <div id="loading">Loading...</div>
   <script src="lotsarray.js"></script>

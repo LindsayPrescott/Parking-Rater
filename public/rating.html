@@ -8,55 +8,6 @@
   </head>
 
   <style type="text/css">
-	div#overlay{
-		display: none;
-		z-index: 2;
-		background: #000;
-		position: fixed;
-		width: 100vw;
-		height: 100vh;
-		top: 0vh;
-		left: 0vw;
-		text-align: center;
-		}
-
-	div#lot-window{
-		display: none;
-		position: fixed;
-		z-index: 3;
-		width: 70vw;
-		height: 70vh;
-		background: #FFF;
-		color: #000;
-		left: 15vw;
-		top: 15vh;
-		text-align: center;
-		}
-
-	div#rating-window{
-		display: none;
-		position: fixed;
-		z-index: 3;
-		width: 70vw;
-		height: 70vh;
-		background: #FFF;
-		color: #000;
-		left: 15vw;
-		top: 15vh;
-		text-align: center;
-		}
-	div#thank-you-window{
-		display: none;
-		position: fixed;
-		z-index: 3;
-		width: 70vw;
-		height: 70vh;
-		background: #FFF;
-		color: #000;
-		left: 15vw;
-		top: 15vh;
-		text-align: center;
-		}
   #loading
   {
     font-size: 200%;
@@ -75,24 +26,7 @@
     	top: 17vh;
     	z-index: -1;
     	}
-	p#lot-window-recent-ratings{
-	text-align: left;
-	margin-left: 5vw;
-	width: 90vw;
-  height: 40vh;
-	}
-	button#lot-window-add-rating{
-	position: fixed;
-	text-align: center;
-	top: 80vh;
-	left: 46vw;
-	}
-	button#lot-window-close{
-	position: fixed;
-	text-align: center;
-	top: 80vh;
-	left: 51vw;
-	}
+
   </style>
 
   <body>
@@ -129,12 +63,14 @@
 		<h3 id="lot-window-header">Parking Lot</h3>
     <br/>
 		<p id='average'>Average rating will go here</p>
-		<p id='lot-window-recent-ratings' style="overflow-y: scroll;">
+		<p id='lot-window-recent-ratings'>
 		Empty Text
 		</p>
-		<button id="lot-window-add-rating" onclick="pullUpRatingWindow()">Add Rating</button>
-		<button id='lot-window-close' onclick = "closeWindow()">Close</button>
-	</div>
+    <div style = "text-align: center">
+      <button class = "window-button" onclick = 'pullUpRatingWindow()'>Add Rating</button>
+      <button class = "window-button" onclick="closeWindow()">Close</button>
+    </div>
+  </div>
 	<div id="rating-window">
 		<h3>Rate how full the lot is</h3>
 		<input type="radio" name = "ratingScore" value="1" checked> 1-Mostly to completely empty.<br>
@@ -143,12 +79,14 @@
 		<input type="radio" name = "ratingScore" value="4" checked> 4-More than half full, but not completely full.<br>
 		<input type="radio" name = "ratingScore" value="5" checked> 5-I took the last empty spot. HA!<br>
 		<br>
-		<button onclick = 'submitRating()'>Submit Rating</button>
-		<button id="close-window" onclick="closeWindow()">Close</button>
+    <div style = "text-align: center">
+  		<button class = "window-button" onclick = 'submitRating()'>Submit Rating</button>
+  		<button class = "window-button" id="close-window" onclick="closeWindow()">Close</button>
+    </div>
 	</div>
 	<div id="thank-you-window">
 		<h3>Thank you for rating!</h3>
-		<button id='close-window' onclick='closeWindow()'>Close</button>
+		<button class = "window-button" id='close-window' onclick='closeWindow()'>Close</button>
 	</div>
   <div id="mapid"></div>
   <div id="loading">Loading...</div>

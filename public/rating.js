@@ -64,8 +64,8 @@ function howLongAgoString(time)
 	let minutes = Math.round(difInSeconds / 60);
 	difInSeconds = difInSeconds % 60;
 	let seconds = Math.round(difInSeconds);
-	hours = (hours == 0) ? "" : hours.toStribg() + " hours, ";
-	minutes = (minutes == 0) ? "" : minutes.toString() + " minutes, ";
+	hours = (hours == 0) ? "" : hours.toString() + " hour, ";
+	minutes = (minutes == 0) ? "" : (minutes == 1) ? minutes.toString() + " minute, " : minutes.toString() + " minutes, ";
 	seconds = seconds.toString() + " seconds ago";
 	return hours + minutes + seconds
 }
@@ -73,7 +73,7 @@ function howLongAgoString(time)
 function getRecentRatings(lot)
 	{
 		let ratingsText = document.getElementById('lot-window-recent-ratings');
-		ratingsText.innerHTML = "Recent ratings: <br><br>";
+		ratingsText.innerHTML = "<br><br>Recent ratings: <br><br>";
 		db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot) => {
 			let i = snapshot.size - 1;
 			maxRatings = 10;//maximum amount of ratings to show in the log
@@ -82,7 +82,7 @@ function getRecentRatings(lot)
 				let doc = snapshot.docs[i];
 				let data = doc.data();
 				let timeDif = new howLongAgo(data.time.toDate());
-				if (timeDif.howLongAgoHours() <= 1)
+				if (timeDif.howLongAgoHours() < 1)
 					{
 						ratingsText.innerHTML += "Score: " + data.score;
 						timeDif = howLongAgoString(data.time.toDate());
@@ -101,6 +101,7 @@ function getRecentRatings(lot)
 		else{
 			averageText.innerHTML = "Current estimated occupancy: " + (obj.averageRating * 20).toFixed(1) + "%";
 		}
+		averageText.style = "position: fixed; top: 33vh; right: 18vw; font-size: 135%";
 	}
 /* function averageRating(lot) //naive average - unused now.
 {
@@ -201,6 +202,7 @@ function mapPress(lot)
 	lotWindow.lotInfoWindow.style.display = "block";
 	lotWindow.header.style.display = "block";
 	lotWindow.header.innerHTML = lot;
+	lotWindow.header.style = "font-size: 175%; margin: auto; position: relative; top: 3vh"
 	getRecentRatings(lot);
 }
 

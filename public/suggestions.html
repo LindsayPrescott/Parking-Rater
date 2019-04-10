@@ -40,16 +40,20 @@
 	left: 0vw;
 	height: 100vh;
 	width: 20vw;
-	background-color: #D3D3D3;
+	background-color: #330080;
 	opacity: 1;
 	position: fixed;
 	display: none;
 	z-index: 1;
 	animation-direction: normal;
 	overflow-y: scroll;
+	color: #FCCF22;
+	animation-name: pull-out;
+	animation-duration: .2s;
 	}
 #lot-window-lot {
-	background-color: #D3D3D3;
+	background-color: #330080;
+	color: #FCCF22;
 	}
 
 #mapid {
@@ -57,7 +61,7 @@
 	width: 60vw;
 	position: fixed;
 	left: 25vw;
-	top: 15vh;
+	top: 17vh;
 	z-index: -1;
 	}
 .big-center {
@@ -70,10 +74,23 @@
 	position: fixed;
 	left: 0vw;
 	top: 0vh;
+	background-color: #800080; /* Green */
+	border: none;
+	color: white;
+	padding: 6px 12px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 10px;
 	}
 .center
 	{
 	text-align: center;
+	}
+
+@keyframes pull-out
+	{
+		from {left: -20vw;}
+		to {left: 0vw;}
 	}
 
 
@@ -104,15 +121,19 @@
 <h2 class="demoHeaders" style = "position: relative; left: 1vw;">Enter a location</h2>
 <div style = "position: relative; left: 1vw;">
 	<input id="autocomplete" title="type &quot;a&quot;"></input>
-	<button id="select-location" onclick="selectLocation()">Select Location</button>
+	&nbsp&nbsp&nbsp&nbsp&nbsp<button class = "small-button" id="select-location" onclick="selectLocation()">Select Location</button>
 </div>
 <br>
+
+<!--
 <div style = "position: relative; left: 1vw;">
 	<p>Is your location not in our database? <br>
 	You can contribue by adding it.
 	<br/> <button id="add-location" onclick="openAddLocationMenu()">Add Location</button>
 	</p>
 </div>
+-->
+
 
 
 <div id = 'overlay'></div>
@@ -131,7 +152,7 @@
 	<p/><p/>
 	<button id = 'submit-location' onclick="submitLocation()">Submit Location</button>
 	<p/>
-	<button id = 'close-window' onclick="closeWindow()">Cancel</button>
+	<button class = "window-button" id = 'close-window' onclick="closeWindow()">Cancel</button>
 </div>
 <div id="mapid"></div>
 <script src="jquery-ui/external/jquery/jquery.js"></script>
@@ -354,19 +375,19 @@ function closeLotSidebar() {
 	}
 
 function lotMouseOver(htmlElement) {
-	htmlElement.style.backgroundColor = "#808080";
+	htmlElement.style.backgroundColor = "#1f004d";
 	}
 function lotMouseLeave(htmlElement) {
-	htmlElement.style.backgroundColor = "#D3D3D3";
+	htmlElement.style.backgroundColor = "#330080";
 	}
 function lotMouseDown(htmlElement) {
-	htmlElement.style.backgroundColor = "#545454";
+	htmlElement.style.backgroundColor = "#140033";
 	}
 
 var currentLotMarker = null;
 var currentLotPolygon = null;
 function lotMouseUp(htmlElement) {
-	htmlElement.style.backgroundColor = "#808080";
+	htmlElement.style.backgroundColor = "#1f004d";
 	var obj = lots.find(o => o.label === htmlElement.title);
 	if (currentLotMarker == null)
 	{

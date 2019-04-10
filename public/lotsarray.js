@@ -20,7 +20,7 @@ function setWeightedAverage(lot) {
 					}
 					else
 					{
-						let meanIncrement = .3 * (rating - average);
+						let meanIncrement = (.3 * (rating - average)) / (snapshot.size - i);
 						let newAverage = average + meanIncrement;
 						average = newAverage;
 					}

@@ -6,35 +6,13 @@
 
 #main-body {
   background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(proxy.duckduckgo.com.jpg);
-  height: 100vh;
+  height: 100vh; 
   background-size: cover;
   background-position: center;
 }
 
-.window-button {
-background-color: #800080; /* Green */
-border: none;
-color: white;
-padding: 15px 32px;
-text-align: center;
-text-decoration: none;
-font-size: 16px;
-
-}
-
-.small-button {
-background-color: #800080; /* Green */
-border: none;
-color: white;
-padding: 10px 20px;
-text-align: center;
-text-decoration: none;
-font-size: 12px;
-
-}
-
 .login-page {
-  width: 360px;
+  width: 360px; 
   padding: 10% 0 0;
   margin: auto;
 }
@@ -44,9 +22,9 @@ font-size: 12px;
   z-index: 1;
   background: rgba(7,40,195,0.8);
   max-width: 360px;
-  margin: 0 auto 100px;
+  margin: 0 auto 100px; 
   padding: 45px;
-  text-align: center;
+  text-align: center; 
 }
 
 .form input {
@@ -58,7 +36,7 @@ font-size: 12px;
   margin: 0 0 15px;
   padding: 15px;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 14px; 
 }
 
 .form button {
@@ -101,12 +79,6 @@ font-size: 12px;
   margin-right: auto;
   width: 80%;
 }
-@keyframes window-open {
-  from {opacity: 0; width: 0%; height: 0%; left: 40%;}
-  to {opacity: 1; width: 70%; height: 70%; left: 15%;}
-}
-
-
 div#overlay{
 	display: none;
 	z-index: 2;
@@ -118,7 +90,7 @@ div#overlay{
 	left: 0px;
 	text-align: center;
 	}
-
+	
 	div#lot-window{
 		display: none;
 		position: fixed;
@@ -130,10 +102,8 @@ div#overlay{
 		left: 15%;
 		top: 15%;
 		text-align: center;
-    animation-name: window-open;
-    animation-duration: .2s;
 		}
-
+		
 	div#rating-window{
 		display: none;
 		position: fixed;
@@ -158,14 +128,10 @@ div#overlay{
 		top: 15%;
 		text-align: center;
 		}
-    p#lot-window-recent-ratings{
-  	text-align: left;
-  	margin-left: 5vw;
-    position: relative;
-    left: 0vw;
-  	width: 25vw;
-    height: 40vh;
-  	}
+	p#lot-window-recent-ratings{
+	text-align: left;
+	margin-left: 5%;
+	}
 	button#lot-window-add-rating{
 	position: fixed;
 	text-align: center;
@@ -196,7 +162,6 @@ button:hover {
 .h2 {
   padding: 10px 8px;
   text-align: center;
-  font-family: 'Montserrat', sans-serif;
 }
 
 /* Add padding to containers */
@@ -219,8 +184,7 @@ button:hover {
 body {
   margin: 0;
   background: #e6e8ed;
-
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif; 
   font-weight: 100;
 }
 
@@ -231,22 +195,25 @@ body {
 
 header {
   background: #3B1869;
+  font-weight: bold;
+  font-family: Georgia, serif;
 }
 
 header::after {
   content: '';
+  text-align: center;
   display: table;
   clear: both;
 }
 
 .logo {
   float: left;
-  padding: 10px 0;
+  padding: 5px;
   color: #FCCF22;
   text-align: center;
   width: auto;
-  padding: 0.6rem;
-  font-size: 1.5rem;
+  //padding: 0.6rem;
+  font-size: 2rem;
   line-height: 1;
   align-items: center;
   font-weight: bold;
@@ -265,22 +232,24 @@ nav ul {
 nav li {
   display: inline-block;
   margin-left: 70px;
-  padding-top: 15px;
+  padding-top: 5px;
   position: relative;
 }
 
 nav a {
-    color: #FCCF22;
-    text-align: center;
-    width: auto;
-    padding: 0.6rem;
-    font-size: 1.1rem;
-    line-height: 1;
-    display: inline-flex;
-    text-decoration: none;
-    align-items: left;
-    font-weight: 600;
-  }
+  color: #FCCF22;
+  clear: both;
+  text-align: center;
+  position: relative;
+  width: auto;
+  padding: 0.6rem;
+  font-size: 1.1rem;
+  line-height: 3;
+  display: table-cell;
+  text-decoration: none;
+  align-items: center;
+  font-weight: 600;
+}
 
 nav a:hover {
   background: #FCCF22;

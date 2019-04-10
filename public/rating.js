@@ -96,10 +96,10 @@ function getRecentRatings(lot)
 		var obj = lots.find(o => o.label == lot);
 		if(obj.averageRating == null)
 		{
-			averageText.innerHTML = "Current estimated occupancy: N/A"
+			averageText.innerHTML = "Current estimated occupancy: No recent ratings."
 		}
 		else{
-			averageText.innerHTML = "Current estimated occupancy: " + (obj.averageRating * 20).toFixed(1) + "%";
+			averageText.innerHTML = "Current estimated occupancy: " + ((obj.averageRating-1)*25).toFixed(1) + "%";
 		}
 		averageText.style = "position: fixed; top: 33vh; right: 18vw; font-size: 135%; animation-name: fade-in; animation-duration: .2s;";
 	}

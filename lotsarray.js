@@ -16,7 +16,7 @@ function setWeightedAverage(lot) {
 				let rating = parseFloat(data.score);
 				let timeDif = new howLongAgo(data.time.toDate());
 				let timeDifHours = timeDif.howLongAgoHours();
-				if (timeDifHours<1)
+				if (timeDifHours<2)
 				{
 					if(average == Math.NaN)
 					{

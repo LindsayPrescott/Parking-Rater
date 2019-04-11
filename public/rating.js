@@ -40,17 +40,19 @@ class howLongAgo {
 
 	howLongAgoMinutes()
 	{
-		return Math.round(this.diff/60000);
+		let num = howLongAgoHours();
+		return Math.floor(num/60000);
 	}
 	howLongAgoSeconds()
 	{
-		return Math.round(this.diff/1000);
+		let num = howLongAgoMinutes();
+		return Math.floor(num/1000);
 	}
 	howLongAgoToString()
 	{
 		let hours = howLongAgoHours();
-		let minutes = Math.round(this.diff%3600000);
-		let seconds = Math.round(this.diff%216000000);
+		let minutes = Math.floor(this.diff%3600000);
+		let seconds = Math.floor(this.diff%216000000);
 		return hours.toString() + " hours, " + minutes.toString() + " minutes, " + seconds.toString() + " seconds ago";
 	}
 }
@@ -59,11 +61,11 @@ function howLongAgoString(time)
 {
 	let difInMilis = new Date().getTime() - time.getTime();
 	let difInSeconds = difInMilis / 1000;
-	let hours = Math.round(difInSeconds / 3600);
+	let hours = Math.floor(difInSeconds / 3600);
 	difInSeconds = difInSeconds % 3600;
-	let minutes = Math.round(difInSeconds / 60);
+	let minutes = Math.floor(difInSeconds / 60);
 	difInSeconds = difInSeconds % 60;
-	let seconds = Math.round(difInSeconds);
+	let seconds = Math.floor(difInSeconds);
 	hours = (hours == 0) ? "" : hours.toString() + " hour, ";
 	minutes = (minutes == 0) ? "" : (minutes == 1) ? minutes.toString() + " minute, " : minutes.toString() + " minutes, ";
 	seconds = seconds.toString() + " seconds ago";

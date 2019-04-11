@@ -24,3 +24,6 @@ yarn-error.log*
 
 #my firebase auth
 tigerparking-firebase-adminsdk.json
+
+#firebase hosting
+/.firebase

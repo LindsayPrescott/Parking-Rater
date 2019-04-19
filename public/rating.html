@@ -2,30 +2,31 @@
 <html>
 
   <head>
-	<meta charset="utf-8">
-	<title>Tiger Parking</title>
-	<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <title>Tiger Parking</title>
+  <link rel="stylesheet" href="style.css">
   </head>
 
+  <!--CSS style for the Leaflet map and loading text that appears on the map-->
   <style type="text/css">
-  #loading
-  {
-    font-size: 200%;
-    left: 21vw;
-    top: 90vh;
-    position: fixed;
-    text-align: center;
-    color: "black";
-    display: "block";
-  }
-  #mapid {
-    	height: 80vh;
-    	width: 60vw;
-    	position: fixed;
-    	left: 20vw;
-    	top: 17vh;
-    	z-index: -1;
-    	}
+    #loading {
+      font-size: 200%;
+      left: 21vw;
+      top: 90vh;
+      position: fixed;
+      text-align: center;
+      color: "black";
+      display: "block";
+    }
+
+    #mapid {
+      	height: 80vh;
+      	width: 60vw;
+      	position: fixed;
+      	left: 20vw;
+      	top: 17vh;
+      	z-index: -1;
+    }
 
   </style>
 
@@ -44,7 +45,6 @@
 	<script src="rating.js"></script>
   <header>
     <div class="container">
-      <!-- may replace with actual logo-->
       <h1 class="logo">Tiger Parking</h1>
       <nav>
         <ul>
@@ -56,21 +56,27 @@
       </nav>
     </div>
   </header>
+
 	<div id="overlay">
 	<!-- Empty overlay -->
 	</div>
+
+  <!--Window that appears when you press a lot polygon on the map-->
 	<div id="lot-window">
-		<h3 id="lot-window-header">Parking Lot</h3>
+  	<h3 id="lot-window-header">Parking Lot</h3>
     <br/>
-		<p id='average'>Average rating will go here</p>
-		<p id='lot-window-recent-ratings'>
-		Empty Text
-		</p>
+  	<p id='average'>Average rating will go here</p>
+  	<p id='lot-window-recent-ratings'>
+  	Empty Text
+  	</p>
+    <!--Aligning buttons at the bottom of the lot window-->
     <div style = "text-align: center">
-      <button class = "window-button" onclick = 'pullUpRatingWindow()'>Add Rating</button>
+      <button class = "window-button" onclick='pullUpRatingWindow()'>Add Rating</button>
       <button class = "window-button" onclick="closeWindow()">Close</button>
     </div>
   </div>
+
+  <!--A window that lets the user rate a parking lot-->
 	<div id="rating-window">
 		<h3>Rate how full the lot is</h3>
     <br><br><br>
@@ -84,29 +90,45 @@
     <br>
     <input type="radio" name = "ratingScore" value="5" checked> 5-I took the last empty spot. HA!<br>
 		<br><br><br><br><br><br>
+    <!--Aligning buttons at the bottom of this window-->
     <div style = "text-align: center">
   		<button class = "window-button" onclick = 'submitRating()'>Submit Rating</button>
   		<button class = "window-button" id="close-window" onclick="closeWindow()">Close</button>
     </div>
 	</div>
+
+  <!--A window that shows a message thanking the user-->
 	<div id="thank-you-window">
 		<h3><br><br><br><br><br><br><br>Thank you for rating!<br><br></h3>
 		<button class = "window-button" id='close-window' onclick='closeWindow()'>Close</button>
 	</div>
-  <div id='closing-window'>
-  </div>
+
+  <!--A blank window that serves as a closing animation for the other windows-->
+  <div id='closing-window'></div>
+
+  <!--The Leaflet map-->
   <div id="mapid"></div>
+
+  <!--Text that appears at the bottom of the map when loading the ratings-->
   <div id="loading">Loading...</div>
+
   <script src="lotsarray.js"></script>
+
+  <!--Initializing the Leaflet map using Javascript-->
   <script>
+
+      /* Uses the L factory to construct a Leaflet map, which is
+      then stored in the mymap variable */
       var mymap = L.map('mapid').setView([30.410447, -91.179332], 16);
 
-      		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-      			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      			maxZoom: 18,
-      			id: 'mapbox.streets',
-      			accessToken: 'pk.eyJ1IjoiZGF0a2kxMSIsImEiOiJjanRnbWN6bGcwN2VpNDNxc2c1NXBpZjc5In0.AwfsXeahKCgjTeXM77P1zQ'
-      		}).addTo(mymap);
+      // Sets the Leaflet tile system to Open Street Map
+  		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+  			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+  			maxZoom: 18,
+  			id: 'mapbox.streets',
+  			accessToken: 'pk.eyJ1IjoiZGF0a2kxMSIsImEiOiJjanRnbWN6bGcwN2VpNDNxc2c1NXBpZjc5In0.AwfsXeahKCgjTeXM77P1zQ'
+  		}).addTo(mymap);
+
       var lotsOnMap = [];
       var poly;
       for(var i = 0; i < lots.length; i++)

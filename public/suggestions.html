@@ -13,7 +13,9 @@
 </head>
 <body onload="getLocations()">
 
+<!--Important styles that are relevant to only this page-->
 <style>
+
 #overlay {
 	height: 100vh;
 	width: 100vw;
@@ -55,7 +57,6 @@
 	background-color: #330080;
 	color: #FCCF22;
 	}
-
 #mapid {
 	height: 80vh;
 	width: 60vw;
@@ -82,19 +83,16 @@
 	text-decoration: none;
 	font-size: 10px;
 	}
-.center
-	{
+.center {
 	text-align: center;
 	}
-
-@keyframes pull-out
-	{
+@keyframes pull-out {
 		from {left: -20vw;}
 		to {left: 0vw;}
 	}
 
-
 </style>
+
 <link rel="stylesheet" href="style.css">
 
 <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-app.js"></script>
@@ -102,6 +100,7 @@
 <script src="firebaseinit.js"></script>
 <script src="suggestions.js"></script>
 
+<!--Navigation bar-->
 <body>
 	<header class="navigation">
 		<div class="container">
@@ -117,7 +116,8 @@
 		</div>
 	</header>
 </body>
-<!-- Autocomplete -->
+
+<!--Location autocomplete search bar-->
 <h2 class="demoHeaders" style = "position: relative; left: 1vw;">Enter a location</h2>
 <div style = "position: relative; left: 1vw;">
 	<input id="autocomplete" title="type &quot;a&quot;"></input>
@@ -125,7 +125,8 @@
 </div>
 <br>
 
-<!--
+<!-- THIS WAS USED FOR DEBUGGING TO ADD NEW LOCATIONS
+
 <div style = "position: relative; left: 1vw;">
 	<p>Is your location not in our database? <br>
 	You can contribue by adding it.
@@ -134,10 +135,10 @@
 </div>
 -->
 
-
-
+<!--An overlay that darkens the rest of the page when a window appears-->
 <div id = 'overlay'></div>
 
+<!--The sidebar that lists the closests lots to a location-->
 <div id = 'lot-sidebar' >
 	<button class = 'left' onclick = "closeLotSidebar()">Close</button>
 	<p class = 'big-center'>
@@ -154,7 +155,10 @@
 	<p/>
 	<button class = "window-button" id = 'close-window' onclick="closeWindow()">Cancel</button>
 </div>
+
+<!--The Leaflet map-->
 <div id="mapid"></div>
+
 <script src="jquery-ui/external/jquery/jquery.js"></script>
 <script src="jquery-ui/jquery-ui.js"></script>
 <script src="lotsarray.js"></script>
@@ -163,6 +167,8 @@
 //LEAFLET MAP
 var mymap = L.map('mapid').setView([30.410447, -91.179332], 16);
 
+		//A function that is called when the map is clicked on.
+		//Opens up the sidebar with lots closest to the clicked location.
 		function onMapClick(e) {
 			closeLotSidebar();
 		 	var _latitude = e.latlng.lat;
@@ -172,22 +178,25 @@ var mymap = L.map('mapid').setView([30.410447, -91.179332], 16);
 				latitude: _latitude,
 				longitude: _longitude
 			};
-		 	if (currentLocationMarker == null)
-		 	{
+
+		 	if (currentLocationMarker == null) {
 		 		currentLocationMarker = L.marker([_latitude, _longitude]).addTo(mymap)
 		 			.bindPopup(customLocation.label)
 		 			.openPopup();
 		 	}
-		 	else
-		 	{
+		 	else {
 		 		currentLocationMarker.setLatLng([_latitude, _longitude])
 		 			.bindPopup(customLocation.label)
 		 			.openPopup();
 		 	}
+
 		 	openLotSidebar(customLocation);
 		}
+
+		//Whenever the 'click' event is called on the map, invokes onMapClick
 		mymap.on('click', onMapClick);
 
+		//Initializes the tile layer for Leaflet
 		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
 			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 			maxZoom: 18,
@@ -197,18 +206,23 @@ var mymap = L.map('mapid').setView([30.410447, -91.179332], 16);
 
 //END OF LEAFLET MAP
 
+//Note: The next 3 functions are mostly used for developer/debugging purposes.
+
+//Opens the window that allows the user to add a custom location.
 function openAddLocationMenu() {
 	document.getElementById('overlay').style.display = "block";
 	var window = document.getElementById('window');
 	window.style.display = "block";
 }
 
+//Closes all windows.
 function closeWindow() {
 	document.getElementById('overlay').style.display = "none";
 	var window = document.getElementById('window');
 	window.style.display = "none";
 }
 
+//Submits a custom location the user created
 function submitLocation() {
 	var _name = document.getElementById('location-name').value.trim();
 	var coordinates = document.getElementById('location-coordinates').value.trim();
@@ -234,7 +248,11 @@ function submitLocation() {
 	closeWindow();
 }
 
+//An array that stores every location that can appear in the autocomplete bar
 var locations = [];
+
+/* Downloads all the locations from our database and stores them in
+	the locations array. */
 function getLocations() {
 	db.collection('Location').get().then((snapshot) => {
 		let i = snapshot.size - 1;
@@ -253,7 +271,11 @@ function getLocations() {
 
 }
 
+//This variable is used to keep track of the current location marker on the map.
 currentLocationMarker = null
+
+/* Selects the location in the location search bar, adding a marker to the
+	map and finding a reference to the location object in the locations array. */
 function selectLocation() {
 
 	var name = document.getElementById('autocomplete').value;
@@ -277,14 +299,17 @@ function selectLocation() {
 	openLotSidebar(obj);
 }
 
+/* Opens the sidebar with distances to the closest lots. */
 function openLotSidebar(location) {
 	var sidebar = document.getElementById('lot-sidebar');
 	sidebar.style.display = "block";
 	var dist = [];
 	var occupancy = [];
 	var R = 6371; // Radius of the earth in km
+	//Cycles through every lot, organizing them by distance.
 	for (var i = 0; i < lots.length; i++)
 	{
+		//Converting geopoints to kilometers
 		var latitude = (location.latitude - lots[i].center[0]) * Math.PI / 180;
 		var longitude = (location.longitude - lots[i].center[1]) * Math.PI / 180;
 		var a =
@@ -300,6 +325,8 @@ function openLotSidebar(location) {
 			distance: d
 			});
 		setWeightedAverage(lots[i].label)
+
+		//Adds text describing the average rating for the lot in layman terms
 		if (parseFloat(lots[i].averageRating)<=1.1)
 		{
 			occupancy.push({
@@ -354,6 +381,7 @@ function openLotSidebar(location) {
 		return comparison;
 		});
 
+	//Creates component divs for each lot
 	var scrollbar = document.getElementById('lot-scrollbar');
 	for (var i = 0; i < dist.length; i++)
 	{
@@ -368,12 +396,16 @@ function openLotSidebar(location) {
 		"</div>";
 		scrollbar.innerHTML = scrollbar.innerHTML + html;
 	}
+
 }
+
+//Simply cloes the sidebar
 function closeLotSidebar() {
 	document.getElementById('lot-sidebar').style.display = "none";
 	document.getElementById('lot-scrollbar').innerHTML = "";
 	}
 
+//These 3 functions are used to color the sidebar lot divs.
 function lotMouseOver(htmlElement) {
 	htmlElement.style.backgroundColor = "#1f004d";
 	}
@@ -384,8 +416,13 @@ function lotMouseDown(htmlElement) {
 	htmlElement.style.backgroundColor = "#140033";
 	}
 
+//Keeps a reference of the currently selected lot marker, and the polygon
+//assosciated with that lot.
 var currentLotMarker = null;
 var currentLotPolygon = null;
+
+/* Function that executes when a lot div has been pressed. It shows you
+	the location of the lot and the polygon assosciated with it. */
 function lotMouseUp(htmlElement) {
 	htmlElement.style.backgroundColor = "#1f004d";
 	var obj = lots.find(o => o.label === htmlElement.title);
@@ -407,6 +444,8 @@ function lotMouseUp(htmlElement) {
 	}
 	currentLotPolygon.setStyle({fillOpacity: 0.75, color: "black", fillColor: numberToColorScale(obj.averageRating)});
 }
+
+//Sets the autocomplete bar to complete the search based off the locations array. */
 $( "#autocomplete" ).autocomplete({
 	source: locations
 });

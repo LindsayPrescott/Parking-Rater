@@ -57,6 +57,8 @@ class howLongAgo {
 	}
 }
 
+/* Gives a string representation of how long ago a Date class is.
+	Ex: 45 minutes, 2 seconds ago; 1 hour, 23 miutes, 31 seconds ago */
 function howLongAgoString(time)
 {
 	let difInMilis = new Date().getTime() - time.getTime();
@@ -72,6 +74,7 @@ function howLongAgoString(time)
 	return hours + minutes + seconds
 }
 
+
 function getRecentRatings(lot)
 	{
 		let ratingsText = document.getElementById('lot-window-recent-ratings');
@@ -85,26 +88,24 @@ function getRecentRatings(lot)
 				let data = doc.data();
 				let timeDif = new howLongAgo(data.time.toDate());
 				if (timeDif.howLongAgoHours() <= 1)
-					{
-						ratingsText.innerHTML += "Score: " + data.score;
-						timeDif = howLongAgoString(data.time.toDate());
-						ratingsText.innerHTML += " - " + timeDif + "<br>";
-					}
+				{
+					ratingsText.innerHTML += "Score: " + data.score;
+					timeDif = howLongAgoString(data.time.toDate());
+					ratingsText.innerHTML += " - " + timeDif + "<br>";
+				}
 				i--;
 				maxRatings--;
-				};
-			});
+			};
+		});
 		let averageText = document.getElementById('average');
 		var obj = lots.find(o => o.label == lot);
 		if(obj.averageRating == null)
-		{
 			averageText.innerHTML = "Current estimated occupancy: No recent ratings."
-		}
-		else{
+		else
 			averageText.innerHTML = "Current estimated occupancy: " + ((obj.averageRating-1)*25).toFixed(1) + "%";
-		}
 		averageText.style = "position: fixed; top: 33vh; right: 18vw; font-size: 135%; animation-name: fade-in; animation-duration: .2s;";
 	}
+
 /* function averageRating(lot) //naive average - unused now.
 {
 	db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot) => {
@@ -193,6 +194,8 @@ function getRecentRatings(lot)
 	}
 } */
 
+/* Triggered whenever one of the lot polygons on the map is clicked.
+	It opens up the lot window, showing the recent and average ratings. */
 function mapPress(lot)
 {
 	lotWindow = new LotWindow(lot);
@@ -205,6 +208,8 @@ function mapPress(lot)
 	getRecentRatings(lot);
 }
 
+/* Opens up the rating window, where users can rate a parking lot.
+	Triggered whenever the player presses the add rating button */
 function pullUpRatingWindow()
 {
 	lotWindow.overlay.style.display = "block";
@@ -212,12 +217,17 @@ function pullUpRatingWindow()
 	lotWindow.lotInfoWindow.style.display = "none";
 	lotWindow.ratingWindow.style.display = "block";
 }
+
+/* Opens the thank you window, where the users get confirmation their
+	rating went through. Triggered whenever a user submits a rating. */
 function pullUpThankYouWindow()
 {
 	lotWindow.ratingWindow.style.display = "none";
 	lotWindow.thankYouWindow.style.display = "block";
 	lotWindow.header.innerHTML = "Thank you for rating!";
 }
+
+/* Closes all windows. Triggered when the player closes the window. */
 function closeWindow()
 {
 
@@ -230,12 +240,20 @@ function closeWindow()
 	document.getElementById('closing-window').style.display = "block";
 	setTimeout(endWindowClosingAnimation, 190);
 }
+
+/* Part of the window closing animation. After the animation is complete,
+	the display of the animation is set to 'none' */
 function endWindowClosingAnimation()
 {
 	document.getElementById('closing-window').style.display = "none";
 }
+
+/* Submits a rating to the database. Triggered on the rating window
+	when a user presses the submit rating button. */
 function submitRating()
 {
+
+	//Obtaining the selected radio's value.
 	var scoreVal;
 	var radios = document.getElementsByName('ratingScore');
 	for (var i = 0, length = radios.length; i < length; i++)
@@ -245,22 +263,27 @@ function submitRating()
 			scoreVal = radios[i].value;
 		}
 	}
+
+	//Adding the obtained value to the database.
 	db.collection('Parking Lot').doc(lotWindow.getLot()).collection('Rating').add({
 			score: parseInt(scoreVal, 10),
 			time: new Date(),
 			user_id: "not defined yet"
 			});
+
 	setWeightedAverage(lotWindow.getLot());
 	pullUpThankYouWindow();
 	setTimeout(loadLots,1500);
 }
 
+//Colors the lots according to their average rating
 function loadLots()
 {
 	for (var i = 0; i < lotsOnMap.length; i++)
 		lotsOnMap[i].polygon.setStyle({fillOpacity: 0.75, color: "black", fillColor: numberToColorScale(parseFloat(lots[i].averageRating))});
 }
 
+//Simply removes the loading text.
 function doneLoading()
 {
 	document.getElementById('loading').style.display = "none";

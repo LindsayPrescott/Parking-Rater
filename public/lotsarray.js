@@ -1,3 +1,5 @@
+
+//Sets the average rating for a given lot.
 function setWeightedAverage(lot) {
 	db.collection('Parking Lot').doc(lot).collection('Rating').orderBy('time').get().then((snapshot) => {
 			var average = Math.NaN;
@@ -36,6 +38,9 @@ function setWeightedAverage(lot) {
 		});
 }
 
+/* Given a number between 1 and 5, returns a color on a scale inbetween
+	yellow and red. */
+
 function numberToColorScale(num)
 {
 	return num > 4.7 ? '#ff593e' :
@@ -50,6 +55,8 @@ function numberToColorScale(num)
 				 '#C0C0C0';
 }
 
+/* An array of lots that contains important information about the lots,
+	like their names, centers, polygon endpoints, and average rating. */
 var lots = [
 	{label: "South Ceba Lot",
 	center: [30.404997, -91.177018],
